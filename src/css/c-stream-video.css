@@ -1,0 +1,10 @@
+.streambox__video {
+	grid-area: video;
+	height: var(--streambox-height);
+  width: calc( var(--streambox-height) / 9 * 16 );
+
+  @media (min-width: 36rem) {
+    max-width: 60vw;
+    max-height: calc( 60vw / 16 * 9);
+  }
+}

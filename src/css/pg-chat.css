@@ -1,0 +1,46 @@
+h4.chatroom__header__title {
+}
+
+
+.sidebar-content .chatgroup {
+  &s__list {
+  }
+
+  margin: 2rem 0;
+  border: .2em solid var(--c-teal-700);
+  background: var(--c-gray-800);
+  padding: 2rem;
+  padding: min(5vw, 2rem);
+  border-radius: .4rem;
+
+  .chatroom {
+    &__title {
+      color: var(--c-teal-400);
+      font-size: 1.375rem;
+      margin: 2.5rem 0 .5rem;
+      place-self: start;
+      max-width: 36rem;
+    }
+
+    button {
+      background: var(--c-magenta-400);
+      &:hover,
+      &:active,
+      &:focus {
+        background: var(--c-magenta-300);
+        color: black;
+      }
+    }
+  
+    &__desc {
+      font-size: 1rem;
+      font-style: italic;
+    }
+    &__invited {
+      display: block;
+      font-family: var(--title-font);
+      color: var(--c-yellow-500);
+      max-width: 24rem;
+    }
+  }
+}

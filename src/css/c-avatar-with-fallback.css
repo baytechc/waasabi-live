@@ -1,0 +1,25 @@
+.avatar-with-fallback {
+  --avatar-size: 4rem;
+
+  display: inline-block;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+
+  /* don't let flexbox mess with the size */
+  flex: none;
+
+  background-color: var(--c-teal-300);
+  border: .125rem solid var(--c-teal-300);
+
+  /* fallback image from https://thenounproject.com/term/person/3557975 */
+  background-image: url("data:image/svg+xml,%3Csvg height='300' width='300' fill='%23FFF' xmlns='http://www.w3.org/2000/svg' data-name='Layer 1' viewBox='0 0 100 100'%3E%3Cpath d='M50 50a16 16 0 10-16-16 16 16 0 0016 16zm0-24a8 8 0 11-8 8 8 8 0 018-8zM50 54c-15.7 0-28 8-28 18a10 10 0 0010 10h36a10 10 0 0010-10c0-10-12.3-18-28-18zm18 20H32a2 2 0 01-2-2c0-4.7 8.6-10 20-10s20 5.3 20 10a2 2 0 01-2 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 50%;
+
+  /* hide alt for no-src images */
+  font-size: 0;
+
+  /* make the image fill the whole circle */
+  object-fit: cover;
+}

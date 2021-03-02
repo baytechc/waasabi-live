@@ -1,0 +1,41 @@
+:root, body {
+  transition: 3s all;
+}
+
+:root[data-immersive="embark"] {
+  --c-gray-100: rgb(246,50,252);
+  --c-gray-200: rgb(233,43,249);
+  --c-gray-300: rgb(220,34,243);
+  --c-gray-400: rgb(197,76,226);
+  --c-gray-500: rgb(151,79,189);
+  --c-gray-600: rgb(107,32,145);
+  --c-gray-700: rgb(66,20,102);
+  --c-gray-800: rgb(33,31,71);
+  --c-gray-900: rgb(11,19,49);
+
+  --c-teal-100: rgb(235,255,247);
+  --c-teal-200: rgb(188,246,223);
+  --c-teal-300: rgb(141,130,199);
+  --c-teal-400: rgb(91,90,171);
+  --c-teal-500: rgb(64,82,146);
+  --c-teal-600: rgb(52,56,127);
+  --c-teal-700: rgb(46,27,106);
+  --c-teal-800: black !important;
+  --c-teal-900: black !important;
+
+}
+
+:root[data-immersive="embark"] body {
+  background-color: black;
+  background-image:
+    url('/ex/embark/immersive/embark_logo.svg'), 
+    url('/ex/embark/immersive/embark_twinkles.svg'), 
+    url('/ex/embark/immersive/embark_bg.svg');
+  background-size: 5vw, cover, cover;
+  background-position: 93vw 80vh, bottom right, bottom right;
+  background-repeat: no-repeat;
+}
+
+:root[data-immersive="embark"] .experience__triggers__b:hover {
+  box-shadow: 0 0 0.2rem white;
+}

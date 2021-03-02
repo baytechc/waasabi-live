@@ -1,0 +1,52 @@
+.sidebar-content .freebie {
+  &s__list {
+  }
+
+  margin: 2rem 1rem;
+  border: .2em solid var(--c-teal-700);
+  background: var(--c-gray-800);
+  padding: 2rem;
+  border-radius: .4rem;
+
+  &__header {
+    display: grid;
+    grid-template-areas: "logo link" "title title";
+    grid-template-columns: 1fr 1fr;
+    place-items: center start;
+    gap: 1rem .5rem;
+    margin-bottom: .5rem;
+
+    &__title {
+      grid-area: title;
+      font-size: 1.5rem;
+      place-self: start center;
+      margin: 0;
+      place-self: start;
+      max-width: 36rem;
+    }
+    &__link {
+      grid-area: link;
+    }
+    img {
+      grid-area: logo;
+      max-height: 2rem;
+      width: 100%;
+      float: right;
+      object-fit: contain;
+      object-position: left center;
+    }
+  }
+  
+  &__desc {
+    font-size: 1rem;
+    font-style: italic;
+    padding: .5rem;
+  }
+  &__claimed {
+    display: block;
+    font-family: var(--title-font);
+    color: var(--c-yellow-500);
+    text-align: center;
+    max-width: 24rem;
+  }
+}

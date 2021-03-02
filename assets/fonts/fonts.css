@@ -1,0 +1,60 @@
+/* https://google-webfonts-helper.herokuapp.com/api/fonts/yanone-kaffeesatz?download=zip&subsets=latin-ext,latin,cyrillic&variants=600&formats=woff,woff2 */
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  src:
+    url('/assets/fonts/yanone-kaffeesatz-v16-latin-ext_latin_cyrillic-600.woff2') format('woff2'),
+    url('/assets/fonts/yanone-kaffeesatz-v16-latin-ext_latin_cyrillic-600.woff') format('woff');
+}
+
+/* https://google-webfonts-helper.herokuapp.com/api/fonts/roboto?download=zip&subsets=latin&variants=700,regular,italic,700italic&formats=woff,woff2 */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  src: 
+    url('/assets/fonts/roboto-v20-latin-regular.woff2') format('woff2'),
+    url('/assets/fonts/roboto-v20-latin-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: normal;
+  src:
+    url('/assets/fonts/roboto-v20-latin-italic.woff2') format('woff2'),
+    url('/assets/fonts/roboto-v20-latin-italic.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  src:
+    url('/assets/fonts/roboto-v20-latin-700.woff2') format('woff2'),
+    url('/assets/fonts/roboto-v20-latin-700.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: bold;
+  src:
+    url('/assets/fonts/roboto-v20-latin-700italic.woff2') format('woff2'),
+    url('/assets/fonts/roboto-v20-latin-700italic.woff') format('woff');
+}
+
+/* https://google-webfonts-helper.herokuapp.com/api/fonts/roboto-mono?download=zip&subsets=latin-ext,latin&variants=regular,italic&formats=woff,woff2 */
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: normal;
+  src:
+    url('/assets/fonts/roboto-mono-v13-latin-ext_latin-regular.woff2') format('woff2'),
+    url('/assets/fonts/roboto-mono-v13-latin-ext_latin-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: italic;
+  font-weight: normal;
+  src:
+    url('/assets/fonts/roboto-mono-v13-latin-ext_latin-italic.woff2') format('woff2'),
+    url('/assets/fonts/roboto-mono-v13-latin-ext_latin-italic.woff') format('woff');
+}

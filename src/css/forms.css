@@ -1,0 +1,62 @@
+select,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  border: 1px solid var(--c-forms);
+  border-radius: .25rem;
+  background: var(--c-background1);
+
+  color: var(--c-flowtext);
+  padding: .75rem 1.25rem;
+
+  max-width: 100%;
+  margin: 0 .5em .5em 0;
+
+  &::placeholder {
+    color: var(--c-forms);
+    opacity: 1;
+  }
+  &:focus {
+    border-color: var(--c-forms);
+    ::placeholder {
+      opacity: .25;
+    }
+  }
+}
+
+fieldset {
+  margin: unset;
+  border: unset;
+  padding: unset;
+
+  margin-bottom: 1rem;
+}
+
+button.inline {
+  display: inline-block;
+  border-radius: .25rem .25rem .75rem .25rem;
+}
+
+.form-message {
+	font-family: var(--title-font);
+	margin: 1em .5em;
+	padding: 1.5em 1em;
+	border-radius: .25rem;
+	max-width: 24rem;
+  
+  font-size: 1.125rem;
+  text-align: center;
+
+  background: var(--c-gray-700);
+
+  &.success {
+    background: var(--c-teal-500);
+    a[href] {
+      color: var(--c-purple-800);
+    }
+  }
+
+  &.error {
+    background: var(--c-magenta-800);
+  }
+}
