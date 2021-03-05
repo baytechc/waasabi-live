@@ -30,10 +30,17 @@ async function init() {
 }
 
 async function initStream() {
-  let sdata = await fetch(`${WAASABI_BACKEND}/attendee-pushes?type=stream&_sort=created_at:DESC&_limit=10`).then(r => r.json());
-  for (let i of sdata) {
-    if (i.message.event == 'livestream-ended') break;
-    if (i.message.event == 'live-now') playStream(i.message.data.playback_id);
+  const signals = await fetch(`${WAASABI_BACKEND}/event-manager/client/livestream`).then(r => r.json());
+
+  if (!signals) return;
+  const sig = signals[0];
+
+  // No stream is live currently
+  if (sig.event == 'livestream.ended') return;
+
+  // There is an ongoing livestream, show it!
+  if (sig.event == 'livestream.live-now') {
+    playStream(sig.message.data.playback_id);
   }
 }
 
