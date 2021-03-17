@@ -1,10 +1,19 @@
-.streambox__video {
-	grid-area: video;
-	height: var(--streambox-height);
-  width: calc( var(--streambox-height) / 9 * 16 );
+/* TODO: Technically this belongs to layout.css or a separate
+   file connected to layout.css for video display (not just streaming)
+*/
+#stream.video-js {
+  height: 100%;
+  width: 100%;
 
-  @media (min-width: 36rem) {
-    max-width: 60vw;
-    max-height: calc( 60vw / 16 * 9);
+  margin: auto;  
+
+  /* Blend the video player into the page background */
+  background: var(--rust-blue);
+
+  /* We will rely on the <video> element poster only */
+
+  .vjs-poster {
+    /*background-size: cover;*/
+    display: none;
   }
 }

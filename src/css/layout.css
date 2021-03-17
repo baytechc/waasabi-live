@@ -1,13 +1,48 @@
 body {
+  /* We want the view to always cover the full screen */
+  min-height: 100vh;
+
+  /* In landscape mode, don't scroll the body, just the sidebar */
+  height: 100vh;
+
   background: var(--rust-blue);
 
   display: grid;
   gap: 0;
   place-items: stretch;
-  grid-template-areas: "header header" "leftmain rightmain" "footer footer";
-  grid-template-rows: 4rem auto 8rem;
-  grid-template-columns: 1fr max-content;
 
+  /* Landscape layout has video/content side by side with the sidebar,
+     sidebar may scroll vertically if content overflows */
+  grid-template-areas:
+    " header  header"
+    "content  sidebar"
+    " footer  footer";
+  grid-template-rows: 4rem calc(100vh - 4rem - 4rem) 4rem;
+
+  /* Two columns for content/sidebar */
+  grid-template-columns: minmax(28rem, auto) minmax(20rem, 32rem);
+
+  /* TODO: Content view should be expandable to full width, hiding
+     the sidebar */
+
+  /* Portrait mode or sufficiently narrow viewport */
+  @media (max-aspect-ratio: 1/1),
+         (max-width: 48rem) {
+    /* Non-scrolling sidebar content */
+    height: auto;
+
+    /* In portrait layout video content is pinned to the top of the
+       screen, the sidebar content is below and may scroll on overflow */
+    grid-template-areas:
+      "header    header"
+      "content  content"
+      "sidebar  sidebar"
+      "footer    footer";
+    grid-template-rows: 4rem 56.25vw /*16/9*/ auto 4rem;
+
+    /* Single-column layout */
+    grid-template-columns: auto 0;
+  }
   padding: 0;  
 }
 header {
@@ -31,14 +66,13 @@ footer {
 /* style.css | http://localhost:8080/style.css */
 
 .streambox__sidebar {
-  grid-area: rightmain;
+  grid-area: sidebar;
 
-  place-self: start end;
+  max-width: 32rem;
 
   width: unset;
   min-width: unset;
-  max-width: 36rem;
-  height: calc(100vh - 4rem - 8rem);
+  height: unset;
 }
 
 .sidebar-content h2,
@@ -104,8 +138,7 @@ footer {
 }
 
 .streambox__player {
-  grid-area: leftmain;
-  place-self: center;
+  grid-area: content;
   position: relative;
 }
 
@@ -135,8 +168,14 @@ footer {
 }
 
 header {
-  display: flex;
-  justify-content: center;
+  grid-area: header;
+  text-align: center;
+  height: 100%;
+}
+
+header img {
+  width: auto;
+  height: 100%;
 }
 
 header nav {

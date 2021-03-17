@@ -23,10 +23,6 @@ body {
 
 
 
-:root {
-  --streambox-height: 50vh;
-  --plugin-height: calc(50vh - 14rem);
-}
 body {
   display: grid;
   gap: 1rem;
@@ -59,14 +55,6 @@ body {
 }
 
 
-header {
-  grid-area: header-start/header-start/header-end/header-end;
-  text-align: center;
-  height: 100%;
-}
-header img {
-  height: 100%;
-}
 
 
 .streambox {
@@ -197,8 +185,4 @@ body {
   :root:not([data-popup="show"]) &__popup {
     display: none;
   }
-}
-
-#stream .vjs-poster {
-  background-size: cover;
 }
