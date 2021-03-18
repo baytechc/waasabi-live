@@ -20,28 +20,42 @@
   --c-forms: #0cf;
 }
 
-.video-js.vjs-waasabi .vjs-big-play-button {
-  background-image: url("/assets/playback.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  border-style: none;
-  background-color: transparent;
-  opacity: .5;
+.video-js.vjs-waasabi {
+  .vjs-big-play-button {
+    background-image: url("/assets/playback.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border-style: none;
+    background-color: transparent;
+    opacity: .5;
 
-  line-height: 6rem;
-  height: 6rem;
-  width: 6rem;
+    line-height: 6rem;
+    height: 6rem;
+    width: 6rem;
 
-	left: 50%;
-  top: 50%;
-  margin-left: -3rem;
-  margin-top: -3rem;
-}
+    left: 50%;
+    top: 50%;
+    margin-left: -3rem;
+    margin-top: -3rem;
 
-.video-js.vjs-waasabi .vjs-big-play-button:focus,
-.video-js.vjs-waasabi:hover .vjs-big-play-button {
-  border-color: transparent;
-  background-color: transparent;
+    /* The code duplication is necessary because of browsers like Webkit who do not support :focus-visible */
+    @supports selector(:focus-visible) {
+      &:focus:not(:focus-visible) {
+        background-image: url("/assets/playback.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent;
+        opacity: .8;
+      }
+    }
+  }
 
-  opacity: 1;
+
+  .vjs-big-play-button:focus,
+  &:hover .vjs-big-play-button {
+    border-color: transparent;
+    background-color: transparent;
+
+    opacity: 1;
+  }
 }

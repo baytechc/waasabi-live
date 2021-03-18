@@ -2,10 +2,25 @@
    file connected to layout.css for video display (not just streaming)
 */
 main > .video-js {
+  /* Default sizing of the video, not ideal but results in no cropping */
   height: 100%;
   width: 100%;
 
   margin: auto;  
+
+  /* Modern browsers support calc()/min(), by updating the available
+     width from JavaScript we make a mostly-CSS solution to the aspect
+     ratio problem */
+  height: min(100%, calc(var(--active-content-w) * 9 / 16));
+
+  /* For browsers that support aspect-ratio we can improve the
+     video sizing without needing to resort to JavaScript */
+  @supports (aspect-ratio: 1/1) {
+    aspect-ratio: 16/9;
+    height: auto;
+    max-height: 100%;
+  }
+    
 
   /* Blend the video player into the page background */
   background: var(--rust-blue);
