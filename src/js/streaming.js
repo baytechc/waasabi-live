@@ -18,6 +18,12 @@ async function init() {
   const acw = document.querySelector('main > .active_content').clientWidth;
   document.querySelector('main').style = `--active-content-w: ${acw}px`;
   //TODO: update on viewport size change
+  
+  // TODO: move this to separate utility class & generalize
+  setTimeout(function() {
+    document.querySelector('.active_content').insertAdjacentHTML('beforeend',`<div class="active_content_overlay">Livestream is offline, check the Schedule for the next event!</div>`);
+  },100)
+
 
   // Wait for JS to load & execute
   await window.videoJsReady;
@@ -74,7 +80,7 @@ function stopStream() {
 // TODO: move all video tags in a central class (streaming, replays, etc.)
 const tVideoTag = (p) => html`<video
   id="livestream"
-  class="streambox__video active_content video-js vjs-waasabi"
+  class="streambox__video active_content video-js vjs-waasabi nostream"
   data-setup='{"liveui":"true"}'
   poster="/assets/video-holder.jpg"
   preload="auto"

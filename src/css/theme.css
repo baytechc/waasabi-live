@@ -38,7 +38,8 @@
     margin-left: -3rem;
     margin-top: -3rem;
 
-    /* The code duplication is necessary because of browsers like Webkit who do not support :focus-visible */
+    /* The code duplication is necessary because of browsers like
+       Webkit who do not support :focus-visible */
     @supports selector(:focus-visible) {
       &:focus:not(:focus-visible) {
         background-image: url("/assets/playback.svg");
@@ -48,8 +49,12 @@
         opacity: .8;
       }
     }
-  }
 
+    /* Hide the placeholder icon */
+    .vjs-icon-placeholder {
+      opacity: 0;
+    }
+  }
 
   .vjs-big-play-button:focus,
   &:hover .vjs-big-play-button {
@@ -59,3 +64,38 @@
     opacity: 1;
   }
 }
+
+
+@keyframes rota {
+  from {
+    transform: rotate3d(-1,-1,-1,20deg);
+  }
+  to {
+    transform: rotate3d(1,1,1,10deg);
+  }
+}
+
+/* stream is offline */
+.video-js.vjs-waasabi.nostream .vjs-big-play-button {
+  background-image: url("/assets/zzz.svg");
+  animation: 1.5s ease-in-out infinite alternate rota;
+  opacity: .8;
+  pointer-events: none;
+  cursor: default;
+}
+
+.active_content_overlay {
+  position: absolute;
+  bottom: 0;
+  background: black;
+  z-index: 10;
+  font-family: var(--title-font);
+  font-size: calc(var(--active-content-w) / 36);
+  padding: .5rem;
+  opacity: 1;
+  color: var(--c-decor);
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+
