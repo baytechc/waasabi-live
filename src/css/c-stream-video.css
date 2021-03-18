@@ -1,7 +1,7 @@
 /* TODO: Technically this belongs to layout.css or a separate
    file connected to layout.css for video display (not just streaming)
 */
-#stream.video-js {
+main > .video-js {
   height: 100%;
   width: 100%;
 

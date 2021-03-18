@@ -10,9 +10,9 @@ const GQL_AUTH_TOKEN = process.env.GQL_AUTH_TOKEN || '';
 
 const MESSAGES_SUBSCRIPTION = gql`
 subscription OnMessage {
-  afterCreateAttendeePush {
-    attendeePush {
-      type, created_at, message
+  afterCreateSignal {
+    signal {
+      event, data, created_at,
     }
   }
 }`;
@@ -54,22 +54,20 @@ function connect(opts = {}) {
   return apolloClient;
 }
 
-export default function listen(cb) {
-  const apolloClient = connect({ authToken: GQL_AUTH_TOKEN });
+// A single GQL connection to the server per client
+const gqlConnection = connect({ authToken: GQL_AUTH_TOKEN });
 
-  let sub = apolloClient.subscribe({
+export default function listen(cb) {
+  if (typeof cb !== 'function') {
+    console.warn('Empty subscription request.');
+    return;
+  }
+
+  gqlConnection.subscribe({
     query: MESSAGES_SUBSCRIPTION
   }).subscribe({
-    next (result) {
-      const message = result.data.afterCreateAttendeePush.attendeePush;
-
-      if (typeof cb == 'function') cb(message);
-      //console.log('PUSH ', message);
+    next(incomingSignal) {
+      cb(incomingSignal.data.afterCreateSignal.signal);
     }
   });
 }
-
-
-// Autostart
-listen(msg => {
-});

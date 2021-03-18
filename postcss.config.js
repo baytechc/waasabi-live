@@ -30,6 +30,7 @@ export default (ctx) => ({
 
       // Pages
       'src/css/pg-home.css',
+      'src/css/pg-replay.css',
       'src/css/pg-chat.css',
       'src/css/pg-freebies.css',
       'src/css/style.css',

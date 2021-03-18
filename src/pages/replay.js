@@ -7,6 +7,7 @@ import { until } from 'lit-html/directives/until.js';
 import { showContent } from '../js/sidebar.js';
 
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
+const SESSION_URL = process.env.WAASABI_SESSION_URL;
 
 
 export const replayButtonHandler = async (e) => {
@@ -19,10 +20,9 @@ export const replayButtonHandler = async (e) => {
 const tReplays = (p) => {
   let list = 
     window.videoJsReady
-    .then(() => fetch(`${WAASABI_BACKEND}/attendee-pushes?type=stream&_sort=created_at:DESC&_limit=100`))
+    .then(() => fetch(`${WAASABI_BACKEND}/event-manager/client/replays`))
     .then(r => r.json())
-    .then(r => r.filter(item => item.message.event == 'now-on-replay'))
-    .then(items => items.map(item => tReplayItem(item.message.data)) );
+    .then(items => items.map(item => tReplayItem(item)) );
 
   return html`<div class="sidebar-content c-chat">
 <h2>Replays</h2>
@@ -36,38 +36,52 @@ ${until(list, html`<span>Loading talk recordings...</span>`)}
 `};
 
 const tReplayItem = (p) => {
-  const link = 'https://rustfest.global/session/'+idSlug(p.session.id,p.session.title);
+  const link = SESSION_URL ? SESSION_URL+idSlug(p.session.id,p.session.title) : '';
+  const title = link ? html`<a href="${link}">${p.session.title}</a>` : p.session.title;
+
+  // TODO: show p.date (time recorded)
   return html`
-  <h4><a href="${link}">${p.session.title}</a></h4>
-  ${tVideoTag(p)}
+  <h4>${title}</h4>
+  ${tVideoThumb(p)}
   `;
 }
 
-const tVideoTag = (p) => {
-  // Initialize player after tag is added to the dom
+const startReplay = (e) => {
+  const btn = e.target;
+  const { playbackId } = btn.dataset;
+
+  e.preventDefault();
+
+  const vElement = tVideoTag({ livestream: { playback_id: playbackId }});
+  render(vElement, document.querySelector('.main__content'));
   setTimeout(() => {
-    const player = videojs('v'+p.playback_id, video.playerConfig());
+    const player = videojs('v'+playbackId, video.playerConfig());
     video.configurePlayer(player);
-
-    // Play video in main stream box
-    player.on('play', () => {
-      const videobox = document.querySelector('.streambox__player > .streambox__video');
-      const playerbox = document.querySelector('#v'+p.playback_id);
-      if (playerbox && videobox) {
-        playerbox.classList.add('streambox__video');
-        videobox.replaceWith(playerbox);
-      }
-    });
+    player.play();
   }, 10);
+}
+const tVideoThumb = (p) => {
+  const id = p.livestream.playback_id;
 
-  return html`<video-js id="v${p.playback_id}"
-  class="replay__video video-js"
+  return html`<button
+    class="replay__thumb"
+    data-playback-id="${id}"
+    style="background-image:url(https://image.mux.com/${id}/thumbnail.jpg?time=5);"
+    @click=${startReplay}
+  ></button>`;
+}
+
+const tVideoTag = (p) => {
+  const id = p.livestream.playback_id;
+
+  return html`<video-js id="v${id}"
+  class="replay__video active_content video-js vjs-waasabi"
   data-setup=''
-  poster="https://image.mux.com/${p.playback_id}/thumbnail.jpg?time=5"
+  poster="https://image.mux.com/${id}/thumbnail.jpg?time=5"
   preload="auto"
   controls
 >
-<source type="application/x-mpegURL" src="https://stream.mux.com/${p.playback_id}.m3u8">
+<source type="application/x-mpegURL" src="https://stream.mux.com/${id}.m3u8">
 <p class="vjs-no-js">
   To view this video please enable JavaScript, and consider upgrading to a
   web browser that

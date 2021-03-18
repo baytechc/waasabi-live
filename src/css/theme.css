@@ -20,7 +20,7 @@
   --c-forms: #0cf;
 }
 
-#stream.video-js .vjs-big-play-button {
+.video-js.vjs-waasabi .vjs-big-play-button {
   background-image: url("/assets/playback.svg");
   background-repeat: no-repeat;
   background-position: center;
@@ -38,7 +38,10 @@
   margin-top: -3rem;
 }
 
-#stream.video-js .vjs-big-play-button:focus,
-#stream.video-js:hover .vjs-big-play-button {
+.video-js.vjs-waasabi .vjs-big-play-button:focus,
+.video-js.vjs-waasabi:hover .vjs-big-play-button {
+  border-color: transparent;
+  background-color: transparent;
+
   opacity: 1;
 }

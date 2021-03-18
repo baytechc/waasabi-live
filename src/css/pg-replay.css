@@ -1,0 +1,32 @@
+.replay__thumb {
+	width: 20rem;
+	border-radius: .25rem;
+	border: .25rem solid var(--c-highlight);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: black;
+	background-position: center;
+	height: calc(0.5625 * 20rem);
+
+	&::after {
+		content: ' ';
+		position: relative;
+		width: 4rem;
+		height: 4rem;
+		display: block;
+		background-image: url(/assets/playback.svg);
+		background-repeat: no-repeat;
+		left: 50%;
+		margin-left: -2rem;
+		opacity: .85;
+
+	}
+
+	&:hover {
+		cursor: pointer;
+
+		&::after {
+			opacity: 1;
+		}
+	}
+}

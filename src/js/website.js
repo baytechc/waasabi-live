@@ -8,10 +8,12 @@ import './button-events.js';
 import '../pages/home.js';
 
 if (process.env.WAASABI_CHAT_ENABLED) {
-  import('./matrix.js');
+  //TODO:import('./matrix.js');
 }
 
-import('./live.js');
+//import('./live.js'); not needed?
 import('./streaming.js');
+/* TODO:
 import('./webmonetization.js');
 import('./immersive.js');
+*/

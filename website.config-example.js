@@ -5,6 +5,9 @@ export default {
   // GraphQL WebSocket connection string to the Waasabi backend
   WAASABI_GRAPHQL_WS: 'wss://live.example.com/graphql',
 
+  // External link to sessions (default: do not link)
+  WAASABI_SESSION_URL: '',
+
   // Is chat enabled? What chat system is used?
   WAASABI_CHAT_ENABLED: true,
   WAASABI_CHAT_SYSTEM: 'matrix',

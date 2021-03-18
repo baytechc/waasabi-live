@@ -5,28 +5,25 @@ import listen from './live.js';
 
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 
+const HANDLED_EVENTS = {
+  'livestream.live-now': ({data}) => playStream(data.livestream.playback_id),
+  'livestream.replay-available': () => stopStream(),
+};
 
 async function init() {
   // Add video to document
   const frag = document.createDocumentFragment();
   render(tVideoTag(), frag);
-  document.querySelector('#stream').replaceWith(frag);
+  document.querySelector('main > .active_content').replaceWith(frag);
 
   // Wait for JS to load & execute
   await window.videoJsReady;
 
+  // Initialize stream from API data
   await initStream();
   
-  // Video player
-  listen(m => {
-    if (m.type == 'stream') {
-      if (m.message.event == 'live-now') {
-        playStream(m.message.data.playback_id);
-      } else if (m.message.event == 'now-on-replay') {
-        stopStream();
-      }
-    }
-  });
+  // Listen to livestream events
+  listen(sig => sig.event in HANDLED_EVENTS ? HANDLED_EVENTS[sig.event](sig) : null);
 }
 
 async function initStream() {
@@ -36,16 +33,16 @@ async function initStream() {
   const sig = signals[0];
 
   // No stream is live currently
-  if (sig.event == 'livestream.ended') return;
+  if (!sig || sig.event == 'livestream.ended') return;
 
   // There is an ongoing livestream, show it!
   if (sig.event == 'livestream.live-now') {
-    playStream(sig.message.data.playback_id);
+    playStream(sig.data.livestream.playback_id);
   }
 }
 
 function playStream(playback_id) {
-  const player = videojs('stream');
+  const player = videojs('livestream');
   const stream = `https://stream.mux.com/${playback_id}.m3u8`;
 
   try {
@@ -59,7 +56,7 @@ function playStream(playback_id) {
 }
 
 function stopStream() {
-  const player = videojs('stream');
+  const player = videojs('livestream');
 
   try {
     player.reset();
@@ -72,8 +69,8 @@ function stopStream() {
 }
 
 const tVideoTag = (p) => html`<video
-  id="stream"
-  class="streambox__video video-js"
+  id="livestream"
+  class="streambox__video active_content video-js vjs-waasabi"
   data-setup='{"liveui":"true"}'
   poster="/assets/video-holder.jpg"
   preload="auto"

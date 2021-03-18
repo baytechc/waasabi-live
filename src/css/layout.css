@@ -137,28 +137,9 @@ footer {
   }
 }
 
-.streambox__player {
+.main__content {
   grid-area: content;
   position: relative;
-}
-
-.streambox__player__playbutton {
-  width: 10rem;
-  background: none;
-  border: none;
-  height: 10rem;
-  place-self: end;
-  opacity: .8;
-}
-
-.streambox__player__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  background: linear-gradient(to bottom, transparent 33%, #ffc832c0);
 }
 
 .streambox_video {
