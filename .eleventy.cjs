@@ -9,6 +9,8 @@ require('dotenv').config();
 const pluginPostCSS = require('eleventy-plugin-sourcemapped-postcss');
 //import pluginPostCSS from 'eleventy-plugin-sourcemapped-postcss';
 
+const fs = require('fs-extra');
+
 // TODO: Watch targets
 const watchTargets = [
   //...
@@ -34,20 +36,29 @@ module.exports = function(eleventyConfig) {
   });
   eleventyConfig.addWatchTarget('./_include/');
   eleventyConfig.addWatchTarget('./src/');
-  eleventyConfig.addWatchTarget('./public/');
-  eleventyConfig.addWatchTarget('./brand/');
   eleventyConfig.addWatchTarget('./index.11ty.js');
   eleventyConfig.addWatchTarget('./postcss.config.js');
 
-  // Pass-through copy
-  [
-    //{ 'public': '.' },
+  // If a brand directory exists copy all of ./public into ./.prebuild,
+  // then overwrite assets with the overrides from ./brand and use
+  // this prebuild directory to generate assets from then on.
+  // WARNING: this breaks watch/autoreload, only use in production
+  if (fs.existsSync('./brand')) {
+    fs.copySync('./public', './.prebuild');
+    fs.copySync('./brand', './.prebuild');
 
-    // Brand content overwrites default public/assets content
-    { 'brand': '.' },
+    eleventyConfig.addPassthroughCopy({ '.prebuild': '.' });
 
-    { 'node_modules/video.js/dist/*.min.css': './assets/videojs' },
-  ].forEach(path => eleventyConfig.addPassthroughCopy(path));
+  // Copy/watch only original sources
+  } else {
+    eleventyConfig.addWatchTarget('./public/');
+    eleventyConfig.addPassthroughCopy({ 'public': '.' },)
+  }
+
+  // Pass-through copy videojs dist
+  eleventyConfig.addPassthroughCopy(
+    { 'node_modules/video.js/dist/*.min.css': './assets/videojs' }
+  );
 
   return {
     dir: {
