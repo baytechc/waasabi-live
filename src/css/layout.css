@@ -1,4 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Scrollbars */
 body {
+  scrollbar-color: #495460 hsla(0,0%,100%,0);
+  scrollbar-width:thin;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(56, 64, 80, 0.3);
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,0.10),inset 0 -1px 0 rgba(0,0,0,0.07);
+}
+
+/* Livepage layout */
+body {
+  margin: 0;
+  padding: 0;
+
   /* We want the view to always cover the full screen */
   min-height: 100vh;
 
@@ -45,7 +67,6 @@ body {
     /* Single-column layout */
     grid-template-columns: auto 0;
   }
-  padding: 0;
 }
 header {
   background: var(--c-header);

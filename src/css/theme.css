@@ -89,7 +89,7 @@
   font-size: calc(var(--active-content-w) / 36);
   padding: .5rem;
   opacity: 1;
-  color: var(--c-decor);
+  color: var(--c-highlight);
   text-shadow:
     -2px 0 var(--c-background), 2px 0 var(--c-background),
     0 -2px var(--c-background), 0 2px var(--c-background),
