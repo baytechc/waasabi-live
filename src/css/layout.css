@@ -70,9 +70,15 @@ footer {
 
   max-width: 32rem;
 
-  width: unset;
-  min-width: unset;
-  height: unset;
+  /* The below properties only really affects landscape views
+     on larger sizes only, in mobile view the sidebar is expanded
+     to scroll together with the page content */ 
+
+  /* Scroll long content */
+  overflow-y: scroll;
+
+  /* When centered, ensure long content doesn't overflow */
+  max-height: 100%;
 }
 
 .sidebar-content h2,
@@ -189,4 +195,12 @@ footer {
     color: var(--rust-yellow);
     text-decoration: none;
   }
+}
+
+/* OPTIONAL: Center main content and sidebar vertically */
+body > main {
+  display: flex;
+}
+body > aside {
+  place-self: center;
 }

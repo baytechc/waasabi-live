@@ -13,12 +13,17 @@ main > .video-js {
      ratio problem */
   height: min(100%, calc(var(--active-content-w) * 9 / 16));
 
+  /* For really slim & wide viewports this is the equivalent of
+     specifying a max-height: 100%, we clamp the width at the
+     16:9 aspect ratio equivalent of the height minus header/footer */
+  width: min(calc((100vh - 8rem) / 9 * 16), 100%);
+
   /* For browsers that support aspect-ratio we can improve the
-     video sizing without needing to resort to JavaScript */
+     video sizing without needing to rely on the --active-content-w
+     set from JavaScript */
   @supports (aspect-ratio: 1/1) {
     aspect-ratio: 16/9;
     height: auto;
-    max-height: 100%;
   }
     
 

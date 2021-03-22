@@ -150,16 +150,6 @@ body {
 
   &__video {}
 
-  &__sidebar {
-    min-width: 24rem;
-    min-width: min(24rem, 98vw);
-    background: var(--c-gray-900);
-    grid-area: sidebar;
-    overflow-y: scroll;
-    width: calc( 98vw - var(--streambox-height)*16/9);
-    max-width: calc(var(--streambox-height)*16/9);
-    height: var(--streambox-height);
-  }
   @media (max-width: 36rem) {
     grid-template-areas:
       "controls"
