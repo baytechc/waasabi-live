@@ -16,7 +16,6 @@ ${HEAD}
 </header>
 
 <main class="main__content">
-  <video class="streambox__video active_content" poster="/assets/video-holder.jpg"></video>
 </main>
 
 <aside class="streambox__sidebar"></aside>

@@ -8,11 +8,19 @@ import gql from 'graphql-tag';
 const GQL_LINK_WS = process.env.WAASABI_GRAPHQL_WS;
 const GQL_AUTH_TOKEN = process.env.GQL_AUTH_TOKEN || '';
 
-const MESSAGES_SUBSCRIPTION = gql`
-subscription OnMessage {
+const SUB_SIGNALS = gql`
+subscription OnSignal {
   afterCreateSignal {
     signal {
-      event, data, created_at,
+      event, data, ts,
+    }
+  }
+}`;
+const SUB_CHAT_MESSAGES = gql`
+subscription OnChatMessage {
+  afterCreateChatMessage {
+    chatMessage {
+      sender, message, message_details, ts,
     }
   }
 }`;
@@ -57,17 +65,31 @@ function connect(opts = {}) {
 // A single GQL connection to the server per client
 const gqlConnection = connect({ authToken: GQL_AUTH_TOKEN });
 
-export default function listen(cb) {
+const gqlSignals = gqlConnection.subscribe({ query: SUB_SIGNALS });
+const gqlChatMessages = gqlConnection.subscribe({ query: SUB_CHAT_MESSAGES });
+
+export function onSignal(cb) {
   if (typeof cb !== 'function') {
     console.warn('Empty subscription request.');
     return;
   }
 
-  gqlConnection.subscribe({
-    query: MESSAGES_SUBSCRIPTION
-  }).subscribe({
-    next(incomingSignal) {
-      cb(incomingSignal.data.afterCreateSignal.signal);
+  gqlSignals.subscribe({
+    next(incoming) {
+      cb(incoming.data.afterCreateSignal.signal);
+    }
+  });
+}
+
+export function onChatMessage(cb) {
+  if (typeof cb !== 'function') {
+    console.warn('Empty subscription request.');
+    return;
+  }
+
+  gqlChatMessages.subscribe({
+    next(incoming) {
+      cb(incoming.data.afterCreateChatMessage.chatMessage);
     }
   });
 }
