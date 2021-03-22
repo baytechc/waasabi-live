@@ -41,7 +41,10 @@ module.exports = function(eleventyConfig) {
 
   // Pass-through copy
   [
-    { 'public': '.' },
+    //{ 'public': '.' },
+
+    // Brand content overwrites default public/assets content
+    { 'brand': '.' },
 
     { 'node_modules/video.js/dist/*.min.css': './assets/videojs' },
   ].forEach(path => eleventyConfig.addPassthroughCopy(path));

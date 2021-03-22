@@ -17,7 +17,7 @@ export default (ctx) => ({
     header: '',
     from: [
       // Fonts
-      'assets/fonts/fonts.css',
+      'public/assets/fonts/fonts.css',
 
       // Defaults
       'src/css/typography.css',
@@ -37,6 +37,8 @@ export default (ctx) => ({
 
       'src/css/layout.css',
       'src/css/theme.css',
+
+      'brand/src/css/theme.css',
     ],
     outdir: '_site/',
     // If no outfile don't concat into single file
