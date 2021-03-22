@@ -35,14 +35,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addWatchTarget('./_include/');
   eleventyConfig.addWatchTarget('./src/');
   eleventyConfig.addWatchTarget('./public/');
-  eleventyConfig.addWatchTarget('./assets/');
+  eleventyConfig.addWatchTarget('./brand/');
   eleventyConfig.addWatchTarget('./index.11ty.js');
   eleventyConfig.addWatchTarget('./postcss.config.js');
 
   // Pass-through copy
   [
     { 'public': '.' },
-    'assets',
+
     { 'node_modules/video.js/dist/*.min.css': './assets/videojs' },
   ].forEach(path => eleventyConfig.addPassthroughCopy(path));
 
