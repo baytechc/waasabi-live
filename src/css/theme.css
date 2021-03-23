@@ -85,18 +85,38 @@
   position: absolute;
   bottom: 0;
   z-index: 10;
-  font-family: var(--title-font);
-  font-size: calc(var(--active-content-w) / 36);
   padding: .5rem;
   opacity: 1;
-  color: var(--c-highlight);
-  text-shadow:
-    -2px 0 var(--c-background), 2px 0 var(--c-background),
-    0 -2px var(--c-background), 0 2px var(--c-background),
-    2px 2px var(--c-background), -2px -2px var(--c-background),
-    2px -2px var(--c-background), -2px 2px var(--c-background);
   width: 100%;
   text-align: center;
   pointer-events: none;
-}
 
+  max-height: calc(var(--active-content-w)/10);
+  overflow: hidden;
+
+  .notification {
+    margin: 0;
+    font-family: var(--title-font);
+    font-size: calc(var(--active-content-w) / 32);
+    color: var(--c-highlight);
+    text-shadow:
+    -.05em 0 var(--c-background),.05em 0 var(--c-background),
+    0 -.05em var(--c-background),0 .05em var(--c-background),
+    .05em .05em var(--c-background),-.05em -.05em var(--c-background),
+    .05em -.05em var(--c-background),-.05em .05em var(--c-background);
+  }
+
+  .message {
+    margin: 0;
+    font-family: var(--flowtext-font);
+    font-size: calc(var(--active-content-w) / 36);
+    color: var(white);
+    text-shadow:
+    0 0 .1em black,
+    -.05em 0 black,.05em 0 black,
+    0 -.05em black,0 .05em black,
+    .05em .05em black,-.05em -.05em black,
+    .05em -.05em black,-.05em .05em black;
+  }
+
+}

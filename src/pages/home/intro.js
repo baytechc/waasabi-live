@@ -27,6 +27,8 @@ export default html`
   You can ask questions and chat with folks on our Matrix channel:
 
   <br><button class="sbc" @click=${()=>{window.open('https://matrix.to/#/!nScYCdqWQUsTkFRJMb:chat.berline.rs')}}>Chat</button>
+
+  <br><input type="checkbox" id="showchat" checked>&nbsp;<label for="showchat">Show chat messages</label>
 </p>
 
 `;

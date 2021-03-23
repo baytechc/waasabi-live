@@ -1,6 +1,10 @@
 import livestreamIdle from './content/livestream-idle.js';
 import livestreamLive from './content/livestream-live.js';
 
+
+window.addEventListener('resize', updateActiveContentSizing);
+
+
 export async function set(ac, options) {
   if (ac == 'livestream.idle') {
     let player = await livestreamIdle();
@@ -21,7 +25,11 @@ export function change(newContent) {
   document.querySelector('main').appendChild(newContent)
 
   // Content sizing
+  updateActiveContentSizing();
+}
+
+export function updateActiveContentSizing() {
   const acw = document.querySelector('main > .active_content').clientWidth;
   document.querySelector('main').style = `--active-content-w: ${acw}px`;
-//TODO: update on viewport size change
+  return acw;
 }
