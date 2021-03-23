@@ -12,7 +12,7 @@ ${HEAD}
 <body>
 
 <header>
-  <a href="https://waasabi.org" target="_blank"><img src="/assets/logo.png"></a>
+  <a href="https://berline.rs/" target="_blank"><img src="/assets/logo.png" alt="Berline.rs Live"></a>
 </header>
 
 <main class="main__content">
@@ -23,7 +23,7 @@ ${HEAD}
 <footer>
   <div>
     <p>Make sure you are familiar with our
-      <a href="https://waasabi.org/code-of-conduct" target="_blank">Code of Conduct.</a>
+      <a href="https://berline.rs/code-of-conduct/" target="_blank">Code of Conduct.</a>
   </div>
 </footer>
 

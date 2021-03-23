@@ -7,13 +7,13 @@ import { chatButtonHandler as chatBtn } from '../chat.js';
 
 export default html`
 
-<h2>Welcome to the Waasabi dev stream!</h2>
+<h2>Welcome to Berline.rs Live!</h2>
 
 <p>
-  The live stream starts in 6 hours (Thursday, March 1., 18:30 Tallinn/EET).
-  For more info on upcoming and past events, check the schedule:
+  Today's <a href="https://berline.rs/2021/03/23/rust-and-tell.html">Rust & Tell</a> starts at 19:00 CET (Central European Time).
+  For more info on upcoming and past events, visit the website:
 
-  <br><button class="sbc">Schedule</button>
+  <br><button class="sbc" @click=${()=>{window.open('https://berline.rs')}}>berline.rs</button>
 </p><br>
 
 <p>
@@ -24,10 +24,9 @@ export default html`
 </p><br>
 
 <p>
-  You can ask questions and chat with folks on the Waasabi development channel
-  on Matrix:
+  You can ask questions and chat with folks on our Matrix channel:
 
-  <br><button class="sbc" @click=${chatBtn}>Chat</button>
+  <br><button class="sbc" @click=${()=>{window.open('https://matrix.to/#/!nScYCdqWQUsTkFRJMb:chat.berline.rs')}}>Chat</button>
 </p>
 
 `;
