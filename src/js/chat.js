@@ -17,16 +17,21 @@ async function init() {
     e.textContent = '['+sender.match(/@([^:]+)/)[1]+'] '+message;
 
     let ac = document.querySelector('.active_content_overlay');
-    if (ac) {
-      while (ac.firstChild) ac.firstChild.remove();
-      ac.appendChild(e);  
+    if (!ac) {
+      let ls = document.querySelector('#livestream');
 
-      clearTimeout(messagetimer);
-      messagetimer = setTimeout(() => { e.remove(); }, 5000);
+      ac = document.createElement('div');
+      ac.className='active_content_overlay';
+      ls.appendChild(ac);
     } else {
-
+      while (ac.firstChild) ac.firstChild.remove();
     }
-  });
+
+    ac.appendChild(e);
+
+    clearTimeout(messagetimer);
+    messagetimer = setTimeout(() => { e.remove(); }, 5000);
+});
 }
 
 init();

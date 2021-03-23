@@ -45,7 +45,8 @@ export default async (options) => {
         player.src(streamUrl);
         player.play();
         // TODO: properly clean the overlay
-        player.el().querySelector('.active_content_overlay').innerHTML = '';
+        let ac = player.el().querySelector('.active_content_overlay');
+        while (ac && ac.firstChild) ac.firstChild.remove();
       }
       catch(e) {
         console.log(e);
