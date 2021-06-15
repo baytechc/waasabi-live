@@ -4,6 +4,9 @@ import pNano from 'cssnano';
 
 import globby from 'globby';
 
+import cfg from './website.config.js';
+
+
 const paths = new Set();
 [
   // Fonts
@@ -22,9 +25,8 @@ globby.sync('src/css/{typography,forms}.css'),
 globby.sync('src/css/{layout,theme}.css'),
 
   // Branding CSS
-  globby.sync('brand/src/css/**/*.css'),
+  globby.sync((cfg.WAASABI_BRAND||'brand')+'/src/css/**/*.css'),
 ].forEach(glob => glob.forEach(p => paths.add(p)));
-console.log(Array.from(paths));
 
 export default (ctx) => ({
   map: ctx.options.map,

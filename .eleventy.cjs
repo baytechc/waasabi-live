@@ -18,6 +18,13 @@ const watchTargets = [
 
 module.exports = function(eleventyConfig) {
 //export default function(eleventyConfig) {
+  // Hacky way to synchronously extract website.config.js info (which is ESM and might be missing)
+  let brand;
+  try {
+    const conf = fs.readFileSync('website.config.js').toString();
+    brand = conf.match(/WAASABI_BRAND['"]?\s*:\s*['"]([^'"]+)/)?.pop() || 'brand';
+  } catch(e) {}
+
   eleventyConfig.setDataDeepMerge(true);
 
   // Plugins
@@ -43,9 +50,9 @@ module.exports = function(eleventyConfig) {
   // then overwrite assets with the overrides from ./brand and use
   // this prebuild directory to generate assets from then on.
   // WARNING: this breaks watch/autoreload, only use in production
-  if (fs.existsSync('./brand')) {
+  if (fs.existsSync('./'+brand)) {
     fs.copySync('./public', './.prebuild');
-    fs.copySync('./brand', './.prebuild');
+    fs.copySync('./'+brand, './.prebuild');
 
     eleventyConfig.addPassthroughCopy({ '.prebuild': '.' });
 

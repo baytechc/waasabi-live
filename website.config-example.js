@@ -1,4 +1,10 @@
 export default {
+  // If you want a custom branding, place the files you would like to override
+  // in the "brand" folder in the root directory.
+  // You can have multiple branding folders and choose between them
+  // by changing this variable. The default value is 'brand'
+  WAASABI_BRAND: 'brand',
+
   // The URL of the Waasabi backend
   WAASABI_BACKEND: 'https://live.example.com/waasabi',
 
