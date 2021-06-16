@@ -6,7 +6,7 @@ import { InMemoryCache } from '@apollo/client/cache';
 import gql from 'graphql-tag';
 
 const GQL_LINK_WS = process.env.WAASABI_GRAPHQL_WS;
-const GQL_AUTH_TOKEN = process.env.GQL_AUTH_TOKEN || '';
+//const GQL_AUTH_TOKEN = process.env.GQL_AUTH_TOKEN || '';
 
 const SUB_SIGNALS = gql`
 subscription OnSignal {
@@ -63,7 +63,8 @@ function connect(opts = {}) {
 }
 
 // A single GQL connection to the server per client
-const gqlConnection = connect({ authToken: GQL_AUTH_TOKEN });
+//const gqlConnection = connect({ authToken: GQL_AUTH_TOKEN });
+const gqlConnection = connect({});
 
 const gqlSignals = gqlConnection.subscribe({ query: SUB_SIGNALS });
 const gqlChatMessages = gqlConnection.subscribe({ query: SUB_CHAT_MESSAGES });
