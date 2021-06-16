@@ -1,11 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Scrollbars */
 body {
+  scrollbar-color: #495460 hsla(0,0%,100%,0);
+  scrollbar-width:thin;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(56, 64, 80, 0.3);
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,0.10),inset 0 -1px 0 rgba(0,0,0,0.07);
+}
+
+/* Livepage layout */
+body {
+  margin: 0;
+  padding: 0;
+
   /* We want the view to always cover the full screen */
   min-height: 100vh;
 
   /* In landscape mode, don't scroll the body, just the sidebar */
   height: 100vh;
 
-  background: var(--rust-blue);
+  background: var(--c-background);
+  color: var(--c-flowtext);
+  font-family: var(--flowtext-font);
 
   display: grid;
   gap: 0;
@@ -43,17 +67,17 @@ body {
     /* Single-column layout */
     grid-template-columns: auto 0;
   }
-  padding: 0;  
 }
 header {
-  background: white;
+  background: var(--c-header);
 }
 footer {
-  background: var(--rust-gray);
+  background: var(--c-background-alt);
+  color: var(--c-flowtext-alt);
 }
 
 .streambox__controls button {
-  background: var(--rust-red);
+  background: var(--c-decor);
 }
 
 
@@ -84,7 +108,7 @@ footer {
 .sidebar-content h2,
 .sidebar-content h3 {
   max-width: 80%;
-  color: white;
+  color: var(--c-title);
   display: inline-block;
 }
 
@@ -101,7 +125,7 @@ footer {
 	max-width: 90vw;
 	line-height: 1.6;
 	border-radius: 2px;
-  background-color: var(--rust-red);
+  background-color: var(--c-decor);
 
   margin-top: 5px;
 }
@@ -125,8 +149,8 @@ footer {
 
   &:not([disabled]) {
     &, &:hover {
-      background-color: var(--rust-red);
-      color: white;
+      background-color: var(--c-decor);
+      color: var(--c-highlight-text);
     }
   
     &:hover, &:focus {
@@ -177,7 +201,7 @@ header nav {
   
   a {
     font-family: "Fira Sans";
-    color: var(--rust-red);
+    color: var(--c-decor);
     font-weight: 600;
     text-decoration: none;
   }
@@ -192,7 +216,7 @@ footer {
 
   font-family: "Fira Sans";
   a {
-    color: var(--rust-yellow);
+    color: var(--c-highlight);
     text-decoration: none;
   }
 }

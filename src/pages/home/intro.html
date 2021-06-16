@@ -1,0 +1,25 @@
+<h2>Welcome!</h2>
+
+<p>
+  You will be able to watch the live stream right here,
+  the stream will start automatically at the scheduled time.
+</p>
+
+<p>
+  Re-watch recordings of previous streams anytime, by clicking the "Replays" button:
+  <br>
+  <button class="sbc" @click="@replays.open">Replays</button>
+</p>
+
+<p>
+  You can ask questions and chat with folks on our Matrix channel:
+
+  <br><button class="sbc" @click="https://matrix.to/">Chat</button>
+
+  <br>
+  <input type="checkbox"
+    id="chat-displaytoggle0"
+    @change="@chat.displaytoggle"
+    checked
+  >&nbsp;<label for="chat-displaytoggle0">Show chat messages</label>
+</p>

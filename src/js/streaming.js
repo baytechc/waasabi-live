@@ -1,7 +1,7 @@
 import './video-player.js';
 
-import { html, render } from 'lit-html';
-import listen from './live.js';
+import { onSignal } from './live.js';
+import * as activeContent from './active-content.js'
 
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 
@@ -11,28 +11,15 @@ const HANDLED_EVENTS = {
 };
 
 async function init() {
-  // Add video to document
-  const frag = document.createDocumentFragment();
-  render(tVideoTag(), frag);
-  document.querySelector('main > .active_content').replaceWith(frag);
-  const acw = document.querySelector('main > .active_content').clientWidth;
-  document.querySelector('main').style = `--active-content-w: ${acw}px`;
-  //TODO: update on viewport size change
-  
-  // TODO: move this to separate utility class & generalize
-  setTimeout(function() {
-    document.querySelector('.active_content').insertAdjacentHTML('beforeend',`<div class="active_content_overlay">Livestream is offline, check the Schedule for the next event!</div>`);
-  },100)
-
-
   // Wait for JS to load & execute
   await window.videoJsReady;
+  //videojs.log.level('all');
 
   // Initialize stream from API data
   await initStream();
   
   // Listen to livestream events
-  listen(sig => sig.event in HANDLED_EVENTS ? HANDLED_EVENTS[sig.event](sig) : null);
+  onSignal(sig => sig.event in HANDLED_EVENTS ? HANDLED_EVENTS[sig.event](sig) : null);
 }
 
 async function initStream() {
@@ -42,59 +29,42 @@ async function initStream() {
   const sig = signals[0];
 
   // No stream is live currently
-  if (!sig || sig.event == 'livestream.ended') return;
+  if (!sig || sig.event == 'livestream.ended') {
+    await activeContent.set('livestream.idle');
+    return;
+  }
+
 
   // There is an ongoing livestream, show it!
   if (sig.event == 'livestream.live-now') {
-    playStream(sig.data.livestream.playback_id);
+    await playStream(sig.data.livestream.playback_id);
   }
 }
 
-function playStream(playback_id) {
-  const player = videojs('livestream');
-  const stream = `https://stream.mux.com/${playback_id}.m3u8`;
+async function playStream(playback_id) {
+  const streamUrl = `https://stream.mux.com/${playback_id}.m3u8`;
 
-  try {
-    player.src(stream);
-    player.play();
-  }
-  catch(e) {
-    console.log(e);
-    alert('The stream is live but you need to press play!');
-  }
+  await activeContent.set('livestream.live', { streamUrl });
 }
 
 function stopStream() {
   const player = videojs('livestream');
 
   try {
-    player.reset();
-    player.poster('/assets/rustfest_comingsoon.svg');
+    player.on(player.el(), 'ended', (e) => {
+      console.log('Livestream ended.');
+      activeContent.set('livestream.idle');
+    });
+
+    //player.reset();
+    //player.poster();
+    //TODO: on player buffer underrun => idle (try to keep the unmuted player around)
   }
   catch(e) {
     console.log(e);
-    alert('The stream is live but you need to press play!');
   }
 }
 
-// TODO: move all video tags in a central class (streaming, replays, etc.)
-const tVideoTag = (p) => html`<video
-  id="livestream"
-  class="streambox__video active_content video-js vjs-waasabi nostream"
-  data-setup='{"liveui":"true"}'
-  poster="/assets/video-holder.jpg"
-  preload="auto"
-  controls
-  muted
->
-<p class="vjs-no-js">
-  To view this video please enable JavaScript, and consider upgrading to a
-  web browser that
-  <a href="https://videojs.com/html5-video-support/" target="_blank"
-    >supports HTML5 video</a
-  >
-</p>
-</video>`;
 
 
 init();

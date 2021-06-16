@@ -9,6 +9,8 @@ require('dotenv').config();
 const pluginPostCSS = require('eleventy-plugin-sourcemapped-postcss');
 //import pluginPostCSS from 'eleventy-plugin-sourcemapped-postcss';
 
+const fs = require('fs-extra');
+
 // TODO: Watch targets
 const watchTargets = [
   //...
@@ -16,6 +18,13 @@ const watchTargets = [
 
 module.exports = function(eleventyConfig) {
 //export default function(eleventyConfig) {
+  // Hacky way to synchronously extract website.config.js info (which is ESM and might be missing)
+  let brand;
+  try {
+    const conf = fs.readFileSync('website.config.js').toString();
+    brand = conf.match(/WAASABI_BRAND['"]?\s*:\s*['"]([^'"]+)/)?.pop() || 'brand';
+  } catch(e) {}
+
   eleventyConfig.setDataDeepMerge(true);
 
   // Plugins
@@ -34,17 +43,29 @@ module.exports = function(eleventyConfig) {
   });
   eleventyConfig.addWatchTarget('./_include/');
   eleventyConfig.addWatchTarget('./src/');
-  eleventyConfig.addWatchTarget('./public/');
-  eleventyConfig.addWatchTarget('./assets/');
   eleventyConfig.addWatchTarget('./index.11ty.js');
   eleventyConfig.addWatchTarget('./postcss.config.js');
 
-  // Pass-through copy
-  [
-    { 'public': '.' },
-    'assets',
-    { 'node_modules/video.js/dist/*.min.css': './assets/videojs' },
-  ].forEach(path => eleventyConfig.addPassthroughCopy(path));
+  // If a brand directory exists copy all of ./public into ./.prebuild,
+  // then overwrite assets with the overrides from ./brand and use
+  // this prebuild directory to generate assets from then on.
+  // WARNING: this breaks watch/autoreload, only use in production
+  if (fs.existsSync('./'+brand)) {
+    fs.copySync('./public', './.prebuild');
+    fs.copySync('./'+brand, './.prebuild');
+
+    eleventyConfig.addPassthroughCopy({ '.prebuild': '.' });
+
+  // Copy/watch only original sources
+  } else {
+    eleventyConfig.addWatchTarget('./public/');
+    eleventyConfig.addPassthroughCopy({ 'public': '.' },)
+  }
+
+  // Pass-through copy videojs dist
+  eleventyConfig.addPassthroughCopy(
+    { 'node_modules/video.js/dist/*.min.css': './assets/videojs' }
+  );
 
   return {
     dir: {

@@ -1,33 +1,30 @@
 //import html from '@popeindustries/lit-html-server/index.mjs';
 import { html } from 'lit-html';
 
-import { replayButtonHandler as replayBtn } from '../replay.js';
+import { replayButtonHandler } from '../replay.js';
 import { chatButtonHandler as chatBtn } from '../chat.js';
 
+const replays = { open: replayButtonHandler }
 
 export default html`
 
-<h2>Welcome to the Waasabi dev stream!</h2>
+<h2>Welcome!</h2>
 
 <p>
-  The live stream starts in 6 hours (Thursday, March 1., 18:30 Tallinn/EET).
-  For more info on upcoming and past events, check the schedule:
+  You will be able to watch the live stream right here, the stream will start automatically at the scheduled time.<br>
 
-  <br><button class="sbc">Schedule</button>
-</p><br>
-
-<p>
-  You will be able to watch the live stream right here, as well as re-watch the
-  recording any time after, by clicking the "Replays" button:
+</p><p>
+  Re-watch recordings of previous streams anytime, by clicking the "Replays" button:
   
-  <br><button class="sbc" @click=${replayBtn}>Replays</button>
+  <br><button class="sbc" @click=${replays.open}>Replays</button>
 </p><br>
 
 <p>
-  You can ask questions and chat with folks on the Waasabi development channel
-  on Matrix:
+  You can ask questions and chat with folks on our Matrix channel:
 
-  <br><button class="sbc" @click=${chatBtn}>Chat</button>
+  <br><button class="sbc" @click=${()=>{window.open('https://matrix.to/')}}>Chat</button>
+
+  <br><input type="checkbox" id="showchat" checked>&nbsp;<label for="showchat">Show chat messages</label>
 </p>
 
 `;

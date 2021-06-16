@@ -2,22 +2,19 @@
 	--flowtext-font: "Roboto", sans-serif;
 	--title-font: "Yanone Kaffeesatz", sans-serif;
 
+  --c-background: #136; /*blue*/
   --c-flowtext: #fff;
   --c-title: #fff;
-
-	--rust-red: #be000e;
-  --c-decor: #be000e;
-
-  --rust-yellow: #fdc600;
-  --c-highlight: #fdc600;
-
-  --rust-gray: #112244;
-  --c-background1: #112244;
   
-  --rust-blue: #136;
-  --c-background2: #136;
-
+  --c-background-alt: #112244; /*gray*/
+  --c-flowtext-alt: var(--c-flowtext);
+  
+  --c-decor: #be000e; /*red*/
+  --c-highlight: #fdc600; /*yellow*/
+  --c-highlight-text: #fff;
+  
   --c-forms: #0cf;
+  --c-header: white;
 }
 
 .video-js.vjs-waasabi {
@@ -87,15 +84,39 @@
 .active_content_overlay {
   position: absolute;
   bottom: 0;
-  background: black;
   z-index: 10;
-  font-family: var(--title-font);
-  font-size: calc(var(--active-content-w) / 36);
   padding: .5rem;
   opacity: 1;
-  color: var(--c-decor);
   width: 100%;
   text-align: center;
   pointer-events: none;
-}
 
+  max-height: calc(var(--active-content-w)/10);
+  overflow: hidden;
+
+  .notification {
+    margin: 0;
+    font-family: var(--title-font);
+    font-size: calc(var(--active-content-w) / 32);
+    color: var(--c-highlight);
+    text-shadow:
+    -.05em 0 var(--c-background),.05em 0 var(--c-background),
+    0 -.05em var(--c-background),0 .05em var(--c-background),
+    .05em .05em var(--c-background),-.05em -.05em var(--c-background),
+    .05em -.05em var(--c-background),-.05em .05em var(--c-background);
+  }
+
+  .message {
+    margin: 0;
+    font-family: var(--flowtext-font);
+    font-size: calc(var(--active-content-w) / 36);
+    color: var(white);
+    text-shadow:
+    0 0 .1em black,
+    -.05em 0 black,.05em 0 black,
+    0 -.05em black,0 .05em black,
+    .05em .05em black,-.05em -.05em black,
+    .05em -.05em black,-.05em .05em black;
+  }
+
+}

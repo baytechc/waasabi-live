@@ -8,7 +8,7 @@ import './button-events.js';
 import '../pages/home.js';
 
 if (process.env.WAASABI_CHAT_ENABLED) {
-  //TODO:import('./matrix.js');
+  import('./chat.js');
 }
 
 //import('./live.js'); not needed?
