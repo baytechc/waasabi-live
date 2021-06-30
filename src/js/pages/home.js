@@ -1,12 +1,12 @@
 import { html, render } from 'lit-html';
 
 import { status as loggedin, loginButtonHandler } from '../auth.js';
-import { chatButtonHandler } from './chat.js';
+import { chatButtonHandler } from '../chat.js';
 
 import { showing, showContent } from '../sidebar.js';
-import { freebiesButtonHandler } from './freebies.js';
+import { freebiesButtonHandler } from '../freebies.js';
 
-import { replayButtonHandler } from './replay.js';
+import { replaysButtonHandler } from '../replays.js';
 
 const CHAT_LINK = process.env.WAASABI_CHAT_URL;
 
@@ -42,7 +42,7 @@ export const tHomepageIntro = (p) => {
 <p>You will be able to watch the live stream right here, as well as re-watch the
   recording any time after, by clicking the "Replays" button below.</p>
 
-<button class="sbc" @click=${replayButtonHandler}>Replays</button>
+<button class="sbc" @click=${replaysButtonHandler}>Replays</button>
 
 <br>
 <p>You will be able to ask questions and chat with the other meetup attendees

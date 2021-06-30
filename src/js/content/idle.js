@@ -1,10 +1,14 @@
+import '../video-player.js';
+
 import { html, render } from 'lit-html';
 
 
-export default async () => {
+export async function idle() {
+  await window.videoJsReady;
+
   return new Promise(resolve => {
     const frag = document.createDocumentFragment();
-    render(tVideoTag(), frag);
+    render(tVideoTag({ classes: ['nostream']}), frag);
     
     const vElement = frag.querySelector('video');
 
@@ -16,17 +20,18 @@ export default async () => {
 
       this.el().appendChild(overlay);
 
-      resolve(this);
+      resolve(this.el());
     });
   });
 }
 
-// TODO: move all video tags in a central class (streaming, replays, etc.)
-const tVideoTag = (p) => html`<video
+
+
+const tVideoTag = (p = {}) => html`<video
   id="livestream"
-  class="streambox__video active_content video-js vjs-waasabi nostream"
+  class="streambox__video active_content video-js vjs-waasabi ${p.classes?.join(' ')}"
   data-setup='{"liveui":"true"}'
-  poster="${process.env.PREFIX}/assets/video-holder.jpg"
+  poster="${process.env.W_PREFIX}/assets/video-holder.jpg"
   preload="auto"
   controls
   muted
@@ -43,3 +48,4 @@ const tVideoTag = (p) => html`<video
 const tVideoOverlay = (p) => html`<div class="active_content_overlay">
 ${p.contents}
 </div>`
+

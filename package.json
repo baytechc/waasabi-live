@@ -33,7 +33,7 @@
     "globby": "^11.0.4",
     "graphql": "^15.5.0",
     "html-prettify": "^1.0.3",
-    "lit-html": "^1.4.1",
+    "lit": "^2.0.0-rc.2",
     "lit-ntml": "^2.18.2",
     "postcss": "^8.3.5",
     "postcss-nested": "^5.0.5",

@@ -4,14 +4,12 @@ import C_HOME_INTRO from './home/intro.js';
 
 
 import { status as loggedin, loginButtonHandler } from '../js/auth.js';
-import { chatButtonHandler } from './chat.js';
 
 import { showing, showContent } from '../js/sidebar.js';
-import { freebiesButtonHandler } from './freebies.js';
 
-import { replayButtonHandler } from './replay.js';
-
-const CHAT_LINK = process.env.WAASABI_CHAT_URL;
+//import { chatButtonHandler } from './chat.js';
+//import { freebiesButtonHandler } from './freebies.js';
+//import { replayButtonHandler } from './replays.js';
 
 
 const BUTTON_SELECTOR='[data-action="go-home"]';
@@ -23,11 +21,6 @@ if (controlSidebar) {
 const signupBtn = (e) => {
   e.preventDefault();
   window.open('https://rustfest.global/information/tickets/','_blank')
-}
-
-const chatBtn = (e) => {
-  e.preventDefault();
-  window.open(CHAT_LINK,'_blank')
 }
 
 export const tHomepageIntro = (p) => {

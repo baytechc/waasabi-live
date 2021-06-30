@@ -1,19 +1,23 @@
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
-const MATRIX_SERVER = process.env.WAASABI_MATRIX_API;
+
+const OWNSERVER = (process.env.WAASABI_MATRIX_SERVER || process.env.WAASABI_MATRIX_CLIENT_URL);
+const SERVER = process.env.WAASABI_MATRIX_SERVER || 'matrix.org';
+const CLIENTURL = process.env.WAASABI_MATRIX_CLIENT_URL || 'https://app.element.io/';
+const APIURL = process.env.WAASABI_MATRIX_API_URL || 'https://matrix.org';
 
 const ROOM_GROUPS = [ 'Staff', 'Main Conference', 'Talk Rooms', 'Project Rooms', 'Sponsors', 'Other', 'Pre/Post-Events' ];
 
-import { status as loggedin, JWT, getProfile } from '../js/auth.js';
+import { status as loggedin, JWT, getProfile } from '../../js/auth.js';
 
 import { html, render, nothing } from 'lit-html';
 import { until } from 'lit-html/directives/until.js';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import marked from 'esmarked';
 
-import { showContent } from '../js/sidebar.js';
+import { showContent } from '../../js/sidebar.js';
 
-import { collectInputs } from '../js/forms.js';
-import { updateViaForm as updateProfile } from './profile.js';
+import { collectInputs } from '../../js/forms.js';
+import { updateViaForm as updateProfile } from '../profile.js';
 
 
 export const chatButtonHandler = async (e) => {
@@ -169,7 +173,7 @@ const registerAccountBtn = async (e) => {
 }
 
 async function matrixApiReq(url, data) {
-  return fetch(MATRIX_SERVER+url, {
+  return fetch(APIURL+'/_matrix/'+url, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -178,26 +182,23 @@ async function matrixApiReq(url, data) {
   });
 }
 
-
 export const tChatSetup = (p) => {
   return html`
 <div class="sidebar-content c-chat">
-<h2>RustFest Chat</h2>
+<h2>${process.env.W_TITLE || 'Waasabi'} Chat</h2>
 
-<p>We use <a href="https://matrix.org" target="_blank">Matrix</a>,
-a federated open chat service for the RustFest Chat. We have our
-own server on <a href="https://rustch.at" target="_blank">rustch.at</a>
-if you need one, but you are welcome to use your existing account
-from any other server!</p>
+<p>This event uses <a href="" target="_blank">Matrix</a>,
+a federated open chat service for text chat.
+
+You are welcome to use your existing account from any server on
+the Matrix network, or ${OWNSERVER?'our own':'the'} server at
+<a href="${CLIENTURL}" target="_blank">${SERVER}</a>.
 
 ${ loggedin()?.attendee.chat_id ? tChatSetupComplete(p) : tChatSetupPending(p) }
 
-<p><em>Check back here during the conference to be able
-to join many other channels, like talk-specific- and
-sponsor rooms!<br>
-For more information
-<a href="https://rustfest.global/information/how-to-chat/" target="_blank">
-read our chat guide</a>!</em></p>
+<p><em>
+  <a href="${process.env.WAASABI_CHAT_INFO}" target="_blank">
+    Learn more about the chat here.</a></em></p>
 
 </div>`};
 
@@ -205,7 +206,7 @@ export const tChatSetupPending = (p) => {
   return html`
 <fieldset class="fs-own-account">
 
-<p>After you told us your Matrix username we you will be automatically
+<p>After you have given us your Matrix username you will be automatically
 invited to the conference chat!</p>
 
 <h3>If you already have a Matrix account:</h3>
@@ -257,7 +258,7 @@ export const tChatSetupComplete = (p) => {
   <code>${loggedin().attendee.chat_id}</code>
 </div>
 
-<p>Ferris has invited you to the main conference chat, but we have
+<p>Our bot has invited you to the main chat, but we have
 many other rooms for attendees (you could even create yours and have
 it listed here!). You can find more details
 <a href="https://rustfest.global/information/how-to-chat/">
