@@ -10,7 +10,7 @@ const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 const SESSION_URL = process.env.WAASABI_SESSION_URL;
 
 
-export const replayButtonHandler = async (e) => {
+export const replaysButtonHandler = async (e) => {
   const btn = e.target;
   e.preventDefault();
 

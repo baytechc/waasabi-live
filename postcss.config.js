@@ -1,38 +1,60 @@
+import DBG from 'debug';
+const debug = DBG('postcss-config');
+
 import pNested from 'postcss-nested';
 import pAutoprefixer from 'autoprefixer';
 import pNano from 'cssnano';
+import pUrl from 'postcss-url';
 
 import globby from 'globby';
 
-import cfg from './website.config.js';
+import { join, resolve } from 'path';
 
+import config from './src/config.js';
 
-const paths = new Set();
-[
-  // Fonts
-  globby.sync('public/assets/fonts/**/*.css'),
+function sources(root) {
+  const sources =   [
+    // Fonts
+    'assets/fonts/**/*.css',
+    // Video.JS
+    'assets/videojs/**/*.css',
 
-  // Base CSS
-  //globby.sync('src/css/*.css'),
-globby.sync('src/css/{typography,forms}.css'),
+    // Base CSS
+    //'src/css/*.css',
+    'src/css/{typography,forms}.css',
 
-  // Page-specific CSS
-  globby.sync('src/css/components/*.css'),
-  globby.sync('src/css/pages/*.css'),
+    // Page-specific CSS
+    'src/css/components/*.css',
+    'src/css/pages/*.css',
 
-  // Style overrides
-  globby.sync('src/css/overrides/*.css'),
-globby.sync('src/css/{layout,theme}.css'),
+    // Style overrides
+    'src/css/overrides/*.css',
+    'src/css/{layout,theme}.css',
+  ];
 
-  // Branding CSS
-  globby.sync((cfg.WAASABI_BRAND||'brand')+'/src/css/**/*.css'),
-].forEach(glob => glob.forEach(p => paths.add(p)));
+  const paths = new Set();
+  for (const src of sources) {
+    const matches = globby.sync(resolve(root||'', src));
+    matches.forEach(p => paths.add(p));
+    debug('  %s - %d files', src, matches.length);
+  }
+
+  return paths;
+}
 
 export default (ctx) => ({
-  map: ctx.options.map,
+  map: ctx?.options.map,
   plugins: [
     pNested,
     pAutoprefixer,
+    // TODO: inline files under a given size limit?
+    // https://github.com/postcss/postcss-url#maxsize
+    pUrl({
+      //asset { url, originUrl, pathname, absolutePath, relativePath, search, hash }
+      url: ({url}) => (url[0] === '/'
+        ? config.PREFIX+url
+        : url
+    )}),
     pNano({
       preset: 'default',
     }),
@@ -41,9 +63,9 @@ export default (ctx) => ({
   //TODO: check for the canonical postcss.config.js properties
   generate: {
     header: '',
-    from: Array.from(paths),
-    outdir: '_site/',
+    from: Array.from(sources(ctx?.options.root)),
+    outdir: join('_site', config.PREFIX),
     // If no outfile don't concat into single file
-    outfile: '_site/style.css',
-  }
+    outfile: join('_site', config.PREFIX, 'style.css'),
+  },
 });

@@ -1,15 +1,23 @@
+import '../video-player.js';
+
 import { html, render } from 'lit-html';
 
 
-export default async (options) => {
-  const { streamUrl } = options;
+export async function live(options) {
+  const { cid, streamUrl } = options;
+
+  await window.videoJsReady;
 
   // Video element exists?
   let player; 
   try {
-    player = videojs('livestream');
+    player = videojs(cid);
   }
-  catch(e) {};
+  catch(e) {
+    if (!e.message.includes('ID supplied is not valid')) {
+      console.error(e);
+    }
+  };
 
   if (player) {
     try {
@@ -17,11 +25,10 @@ export default async (options) => {
       player.play();
       // TODO: properly clean the overlay
       player.el().querySelector('.active_content_overlay').remove();
-      return player;
+      return player.el();
     }
     catch(e) {
       console.log(e);
-      alert('The stream is live but you need to press play!');
     }
     // TODO: mute detection    
   }
@@ -30,16 +37,16 @@ export default async (options) => {
     // Need to create new player
     // TODO: reuse the same code as in "idle()"
     const frag = document.createDocumentFragment();
-    render(tVideoTag(), frag);
+    render(tVideoTag(options), frag);
     
     const vElement = frag.querySelector('video');
 
     videojs(vElement, null, function() {
       const player = this;
-      //const overlay = document.createDocumentFragment();
-      //render(tVideoOverlay({ contents: '' }), overlay);
+      const overlay = document.createDocumentFragment();
+      render(tVideoOverlay({ contents: '' }), overlay);
 
-      //player.el().appendChild(overlay);
+      player.el().appendChild(overlay);
 
       try {
         player.src(streamUrl);
@@ -50,33 +57,27 @@ export default async (options) => {
       }
       catch(e) {
         console.log(e);
-        alert('The stream is live but you need to press play!');
       }
-  
-      resolve(player);
+
+      resolve(player.el());
     });
   });
 }
 
-// TODO: move all video tags in a central class (streaming, replays, etc.)
-const tVideoTag = (p) => html`<video
-  id="livestream"
-  class="streambox__video active_content video-js vjs-waasabi"
+export async function ondemand(options) {}
+
+
+const tVideoTag = (p = {}) => html`<video
+  id="${p.cid}"
+  class="streambox__video active_content video-js vjs-waasabi ${p.classes?.join(' ')}"
   data-setup='{"liveui":"true"}'
-  poster="/assets/video-holder.jpg"
+  poster="${process.env.W_PREFIX}/assets/video-holder.jpg"
   preload="auto"
   controls
   muted
 >
-<p class="vjs-no-js">
-  To view this video please enable JavaScript, and consider upgrading to a
-  web browser that
-  <a href="https://videojs.com/html5-video-support/" target="_blank"
-    >supports HTML5 video</a
-  >
-</p>
 </video>`;
 
-const tVideoOverlay = (p) => html`<div class="active_content_overlay">
+const tVideoOverlay = (p = {}) => html`<div class="active_content_overlay">
 ${p.contents}
-</div>`
+</div>`;

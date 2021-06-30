@@ -1,68 +1,56 @@
-import './video-player.js';
-
-import { onSignal } from './live.js';
-import * as activeContent from './active-content.js'
-
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 
-const HANDLED_EVENTS = {
-  'livestream.live-now': ({data}) => playStream(data.livestream.playback_id),
-  'livestream.replay-available': () => stopStream(),
-};
+import { onSignal } from './live.js';
 
-async function init() {
-  // Wait for JS to load & execute
-  await window.videoJsReady;
-  //videojs.log.level('all');
+// TODO: move these to init() via dynamic import()
+// allow enabling/disabling via config
+import * as streamHls from './stream-hls.js';
+import * as streamPeertube from './stream-peertube.js';
 
-  // Initialize stream from API data
-  await initStream();
-  
-  // Listen to livestream events
-  onSignal(sig => sig.event in HANDLED_EVENTS ? HANDLED_EVENTS[sig.event](sig) : null);
+import * as activeContent from './active-content.js';
+
+
+const STREAM_TYPES = {
+  hls: streamHls,
+  peertube: streamPeertube,
 }
 
-async function initStream() {
+// turns hyphenated-things into camelcaseThings
+const camel = s => s.replace(/-\w/g, (m)=>m.substr(1).toUpperCase());
+
+async function init() {  
+  await activeContent.set({
+    type: 'idle',
+  });  
+
+  // Listen to livestream events
+  onSignal(sig => handleEvent(sig.data));
+
+  // Bootstrap live stream
   const signals = await fetch(`${WAASABI_BACKEND}/event-manager/client/livestream`).then(r => r.json());
 
-  if (!signals) return;
-  const sig = signals[0];
-
-  // No stream is live currently
-  if (!sig || sig.event == 'livestream.ended') {
-    await activeContent.set('livestream.idle');
-    return;
-  }
-
-
-  // There is an ongoing livestream, show it!
-  if (sig.event == 'livestream.live-now') {
-    await playStream(sig.data.livestream.playback_id);
+  if (signals?.length > 0) {
+    await handleEvent(signals[0].data);
   }
 }
 
-async function playStream(playback_id) {
-  const streamUrl = `https://stream.mux.com/${playback_id}.m3u8`;
+function handleEvent(data) {
+  const { type, event } = data;
+  console.log('handleEvent:', data);
+  if (type == 'livestream') {
+    const streamType = data.livestream.type ?? 'hls';
 
-  await activeContent.set('livestream.live', { streamUrl });
-}
+    if (streamType in STREAM_TYPES) {
+      const backend = STREAM_TYPES[streamType];
+      const streamEvent = camel(event);
 
-function stopStream() {
-  const player = videojs('livestream');
-
-  try {
-    player.on(player.el(), 'ended', (e) => {
-      console.log('Livestream ended.');
-      activeContent.set('livestream.idle');
-    });
-
-    //player.reset();
-    //player.poster();
-    //TODO: on player buffer underrun => idle (try to keep the unmuted player around)
+      if (streamEvent in backend) {
+        return backend[streamEvent](data);
+      }
+    }  
   }
-  catch(e) {
-    console.log(e);
-  }
+
+  return false;
 }
 
 

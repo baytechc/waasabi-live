@@ -4,10 +4,11 @@ import 'videojs-hls-quality-selector';
 
 async function init() {
   // CSS
-  const videojsStyle = document.createElement('link');
-  videojsStyle.setAttribute('rel', 'stylesheet');
-  videojsStyle.setAttribute('href', '/assets/videojs/video-js.min.css');
-  document.head.appendChild(videojsStyle);
+  //const videojsStyle = document.createElement('link');
+  //videojsStyle.setAttribute('rel', 'stylesheet');
+  //videojsStyle.setAttribute('href', process.env.W_PREFIX+'/assets/videojs/video-js.min.css');
+  //document.head.appendChild(videojsStyle);
+  // - disabled, we add this to the site CSS
 
   window.videojs = videojs;
   window.videoJsReady = Promise.resolve(videojs);

@@ -1,4 +1,6 @@
 export default {
+  PREFIX: '/waasabi_live',
+
   // If you want a custom branding, place the files you would like to override
   // in the "brand" folder in the root directory.
   // You can have multiple branding folders and choose between them
