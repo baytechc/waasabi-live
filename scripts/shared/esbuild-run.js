@@ -57,7 +57,7 @@ function defines(opts = {}) {
     redefs['process.env.NODE_ENV'] = '"production"';
 
     // Expose the PREFIX and all WAASABI_* variables from config.js to JavaScript
-    const configEntries = Object.entries(config).filter(([k]) => k=='PREFIX' || k.startsWith('WAASABI_'));
+    const configEntries = Object.entries(config).map(([k,v]) => [ k.startsWith('WAASABI_') ? k : 'W_'+k, v ]);
 
     debug('Defined source replacements:');
     for (let [k,v] of configEntries) {
