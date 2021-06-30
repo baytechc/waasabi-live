@@ -26,7 +26,7 @@ const tVideoTag = (p) => html`<video
   id="livestream"
   class="streambox__video active_content video-js vjs-waasabi nostream"
   data-setup='{"liveui":"true"}'
-  poster="/assets/video-holder.jpg"
+  poster="${process.env.PREFIX}/assets/video-holder.jpg"
   preload="auto"
   controls
   muted

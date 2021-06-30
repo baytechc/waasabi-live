@@ -1,6 +1,6 @@
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 
-import marked from 'marked';
+import marked from 'esmarked';
 
 import { status as loggedin, JWT, getProfile } from '../js/auth.js';
 

@@ -8,7 +8,7 @@ import { status as loggedin, JWT, getProfile } from '../js/auth.js';
 import { html, render, nothing } from 'lit-html';
 import { until } from 'lit-html/directives/until.js';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import marked from 'marked';
+import marked from 'esmarked';
 
 import { showContent } from '../js/sidebar.js';
 
