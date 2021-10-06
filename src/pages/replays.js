@@ -17,12 +17,17 @@ export const replaysButtonHandler = async (e) => {
   showContent(tReplays({}));
 }
 
+const videoList = {}
 const tReplays = (p) => {
-  let list = 
+  const list = 
     window.videoJsReady
     .then(() => fetch(`${WAASABI_BACKEND}/event-manager/client/replays`))
     .then(r => r.json())
-    .then(items => items.map(item => tReplayItem(item)) );
+    .then(items => items.map(item => {
+      const id = item.livestream.playback_id;
+      videoList[id] = item;
+      return tReplayItem(item)
+     }));
 
   return html`<div class="sidebar-content c-chat">
 <h2>Replays</h2>
@@ -36,7 +41,8 @@ ${until(list, html`<span>Loading talk recordings...</span>`)}
 `};
 
 const tReplayItem = (p) => {
-  const link = SESSION_URL ? SESSION_URL+idSlug(p.session.id,p.session.title) : '';
+  const idslug = idSlug(p.session.id,p.session.title)
+  const link = SESSION_URL ? SESSION_URL.replace('%SLUG%',idslug) : '';
   const title = link ? html`<a href="${link}">${p.session.title}</a>` : p.session.title;
 
   // TODO: show p.date (time recorded)
@@ -52,9 +58,11 @@ const startReplay = (e) => {
 
   e.preventDefault();
 
-  const vElement = tVideoTag({ livestream: { playback_id: playbackId }});
+  const p = videoList[playbackId]
+  const vElement = tVideoTag(p);
   render(vElement, document.querySelector('.main__content'));
-  setTimeout(() => {
+
+  if (p.livestream.type != 'peertube') setTimeout(() => {
     const player = videojs('v'+playbackId, video.playerConfig());
     video.configurePlayer(player);
     player.play();
@@ -62,22 +70,30 @@ const startReplay = (e) => {
 }
 const tVideoThumb = (p) => {
   const id = p.livestream.playback_id;
+  const provider = p.livestream.type;
+  const thumbnail = provider == 'peertube'
+    ? `/static/thumbnails/${p.video.Thumbnails[0].filename}`
+    : `https://image.mux.com/${id}/thumbnail.jpg?time=5`
 
   return html`<button
     class="replay__thumb"
     data-playback-id="${id}"
-    style="background-image:url(https://image.mux.com/${id}/thumbnail.jpg?time=5);"
+    style="background-image:url(${thumbnail});"
     @click=${startReplay}
   ></button>`;
 }
 
 const tVideoTag = (p) => {
   const id = p.livestream.playback_id;
+  const provider = p.livestream.type;
+  if (provider == 'peertube') return tVideoTagPeertube(p);
+
+  const poster = `https://image.mux.com/${id}/thumbnail.jpg?time=5`
 
   return html`<video-js id="v${id}"
-  class="replay__video active_content video-js vjs-waasabi"
-  data-setup=''
-  poster="https://image.mux.com/${id}/thumbnail.jpg?time=5"
+  class="replay__video active_content video-js vjs-waasabi waasabi-${provider}"
+  data-setup=""
+  poster="${poster}"
   preload="auto"
   controls
 >
@@ -92,6 +108,24 @@ const tVideoTag = (p) => {
 </video-js>
 <br>
 <br>
+`;
+}
+const tVideoTagPeertube = (p) => {
+  const id = p.livestream.playback_id;
+  const provider = p.livestream.type;
+  const poster =  `/static/thumbnails/${p.video.Thumbnails[0].filename}`;
+
+  return html`<iframe 
+    id="v${id}"
+    class="replay__video active_content video-js vjs-waasabi waasabi-${provider}"
+    width="560"
+    height="315"
+    sandbox="allow-same-origin allow-scripts allow-popups"
+    title="Live"
+    src="/videos/embed/$${id}"
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
 `;
 }
 
