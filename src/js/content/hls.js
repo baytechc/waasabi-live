@@ -61,7 +61,7 @@ export async function live(options) {
 
       const PE = player.el()
       const act = document.createElement('button');
-      act.className = "activeContentTrigger";
+      act.className = "activeContentTrigger stream";
       PE.appendChild(act)
 
       resolve(PE);

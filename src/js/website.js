@@ -20,28 +20,15 @@ import('./immersive.js');
 
 import { updateActiveContent } from './active-content.js'
 
-let el=document.createElement('div')
-el.className="ac"
-
-el.innerHTML='<button class="activeContentTrigger">Veloren</button>'
-
-let ex=document.createElement('iframe')
-ex.id="ex_veloren"
-ex.className='content'
-ex.setAttribute('style','width: 100%;height: 100%;')
-ex.src = "/assets/ex/veloren/index.html"
-//ex.hidden = true
-el.appendChild(ex)
-
-document.querySelector('main').appendChild(el);
-
 document.body.addEventListener('click', e => {
-  if (e.target.className !== "activeContentTrigger") {
+  console.log(e)
+  if (!e.target.classList.contains('activeContentTrigger')) {
     return
   }
+
   e.preventDefault()
+
   const el = e.target.parentNode
-  console.log(el)
   const ex = el.classList.contains('ac') ? el : el.querySelector('.ac')
 
   const isActive = !el.dataset.active
@@ -49,6 +36,7 @@ document.body.addEventListener('click', e => {
 
   let exv = ex?.querySelector('video')
     ?? ex.querySelector('iframe')?.contentDocument.querySelector('video')
+    // todo: lazy-load experiences
 
   if (isActive) {
     //ex.hidden = false
@@ -74,7 +62,7 @@ el2.className="ac"
 el2.dataset.active=false
 
 const fsb = document.createElement('button')
-fsb.className = "fsb"
+fsb.className = "activeContentTrigger fsb"
 fsb.textContent = "Fullscreen"
 fsb.addEventListener('click', e => {
   const elem = document.querySelector('main');
@@ -85,3 +73,40 @@ fsb.addEventListener('click', e => {
 
 el2.appendChild(fsb)
 document.querySelector('main').appendChild(el2);
+
+
+addExperience({
+  id: 'veloren',
+  title: 'Veloren',
+  src: '/assets/ex/veloren/index.html'
+})
+
+addExperience({
+  id: 'paddlepunks',
+  title: 'Paddlepunks',
+  src: '/assets/ex/paddlepunks/index.html'
+})
+
+addExperience({
+  id: 'concordium',
+  title: 'Concordium',
+  src: '/assets/ex/concordium/index.html'
+})
+
+function addExperience(data) {
+  const { id, title, src, } = data;
+  let el=document.createElement('div')
+  el.className="ac"
+
+  el.innerHTML=`<button class="activeContentTrigger ex-${id}">${title}</button>`
+
+  let ex=document.createElement('iframe')
+  ex.id="ex_"+id
+  ex.className='content'
+  ex.setAttribute('style','width: 100%;height: 100%;')
+  ex.src = src
+
+  el.appendChild(ex)
+
+  document.querySelector('main').appendChild(el);
+}
