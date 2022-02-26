@@ -27,7 +27,7 @@ console.log('AC:', type+'/'+endpoint, data);
 
 export function change(newContent) {
   // Remove all
-  document.querySelectorAll('main > .active_content').forEach(c => c !== newContent ? c.remove() : null);
+  // document.querySelectorAll('main > .active_content').forEach(c => c !== newContent ? c.remove() : null);
 
   // Add new
   document.querySelector('main').appendChild(newContent)

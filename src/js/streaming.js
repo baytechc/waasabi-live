@@ -18,10 +18,10 @@ const STREAM_TYPES = {
 // turns hyphenated-things into camelcaseThings
 const camel = s => s.replace(/-\w/g, (m)=>m.substr(1).toUpperCase());
 
-async function init() {  
+async function init() {
   await activeContent.set({
     type: 'idle',
-  });  
+  });
 
   // Listen to livestream events
   onSignal(sig => handleEvent(sig.data));
@@ -30,7 +30,9 @@ async function init() {
   const signals = await fetch(`${WAASABI_BACKEND}/event-manager/client/livestream`).then(r => r.json());
 
   if (signals?.length > 0) {
-    await handleEvent(signals[0].data);
+    for (const sig of signals) {
+      await handleEvent(sig.data);
+    }
   }
 }
 
@@ -47,7 +49,7 @@ function handleEvent(data) {
       if (streamEvent in backend) {
         return backend[streamEvent](data);
       }
-    }  
+    }
   }
 
   return false;
