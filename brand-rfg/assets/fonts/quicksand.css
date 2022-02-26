@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+    url('/assets/fonts/quicksand-v21-latin-ext_latin-700.woff2') format('woff2'),
+    url('/assets/fonts/quicksand-v21-latin-ext_latin-700.woff') format('woff');
+}
