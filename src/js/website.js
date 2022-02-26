@@ -41,15 +41,15 @@ document.body.addEventListener('click', e => {
   }
   e.preventDefault()
   const el = e.target.parentNode
-  const ex = el.querySelector('.ac')
+  console.log(el)
+  const ex = el.classList.contains('ac') ? el : el.querySelector('.ac')
 
   const isActive = !el.dataset.active
   el.dataset.active = isActive ? 'true' : ''
-  console.log('el:', el)
 
-  let exv = ex?.contentDocument.querySelector('video')
+  let exv = ex?.querySelector('video')
+    ?? ex.querySelector('iframe')?.contentDocument.querySelector('video')
 
-  console.log(el.dataset, isActive, exv)
   if (isActive) {
     //ex.hidden = false
 
