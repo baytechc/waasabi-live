@@ -104,7 +104,7 @@ body > main {
 }
 .ac .activeContentTrigger {
 	display: block;
-	position: relative;
+	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 1;
@@ -137,6 +137,7 @@ body > main {
   background-position: center;
   border: .5rem solid var(--c-purple-900);
   border-radius: .5rem;
+	position: relative;
 }
 .ac:not([data-active="true"]) .content {
   display: none;
