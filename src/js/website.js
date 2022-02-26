@@ -45,9 +45,9 @@ document.body.addEventListener('click', e => {
 
   const isActive = !el.dataset.active
   el.dataset.active = isActive ? 'true' : ''
+  console.log('el:', el)
 
-  //ex=window.frames['ex_veloren'];
-  exv=ex.contentDocument.querySelector('video')
+  let exv = ex?.contentDocument.querySelector('video')
 
   console.log(el.dataset, isActive, exv)
   if (isActive) {
@@ -57,7 +57,6 @@ document.body.addEventListener('click', e => {
       exv.volume = .5
       exv.muted = false
       exv.play()
-      console.log('just push play', exv.playing)
     }
   } else {
     if (exv) {
@@ -66,6 +65,7 @@ document.body.addEventListener('click', e => {
 
     //ex.hidden = true
   }
+
   updateActiveContent()
 })
 

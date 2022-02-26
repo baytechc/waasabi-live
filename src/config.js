@@ -32,7 +32,7 @@ export default {
 
   COC_LINK: "https://rustfest.global/coc",
 
-  SOCIALIMAGE_LINK: "",
+  SOCIALIMAGE_LINK: "https://rustfest.world/assets/posts/2022/2021_latam_is_on.png",
   SOCIALIMAGE_ALT: "",
 
   PAYMENTPTR: "$ilp.uphold.com/2YdXerkKdULj",

@@ -19,9 +19,9 @@ const STREAM_TYPES = {
 const camel = s => s.replace(/-\w/g, (m)=>m.substr(1).toUpperCase());
 
 async function init() {
-  await activeContent.set({
-    type: 'idle',
-  });
+  // await activeContent.set({
+  //   type: 'idle',
+  // });
 
   // Listen to livestream events
   onSignal(sig => handleEvent(sig.data));
