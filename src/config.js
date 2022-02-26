@@ -22,7 +22,7 @@ export default {
     "node_modules/video.js/dist/video-js.min.css": "assets/videojs",
   },
 
-  PREFIX: "/waasabi_live",
+  PREFIX: "",
 
   TITLE: "RustFest LATAM Live!",
   DESCRIPTION: "Conferencia de Rust comunitaria en español e inglés. Community Rust conference in English & Spanish.",

@@ -5,14 +5,14 @@
   --c-background: #136; /*blue*/
   --c-flowtext: #fff;
   --c-title: #fff;
-  
+
   --c-background-alt: #112244; /*gray*/
   --c-flowtext-alt: var(--c-flowtext);
-  
+
   --c-decor: #be000e; /*red*/
   --c-highlight: #fdc600; /*yellow*/
   --c-highlight-text: #fff;
-  
+
   --c-forms: #0cf;
   --c-header: white;
 }

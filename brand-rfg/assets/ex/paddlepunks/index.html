@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veloren</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="backdrop">
+  <video autoplay loop muted>
+    <script type="text/javascript">
+      const a=['-01','-02','-03','-04','-05','-06','2-01','2-02','2-03','2-04','3-01','3-02','3-03','3-04','4-01','4-02','5-01','5-02','5-03','6-01','6-02','6-03'];
+      const id = a[(Math.random()*a.length)|0];
+      document.write(`
+      <source src="https://backend.rustfest.global/interactive/paddlepunks${id}.mp4" type="video/mp4">
+      <source src="https://backend.rustfest.global/interactive/paddlepunks${id}.webm" type="video/vp9">`)
+    </script>
+  </video>
+</div>
+
+<a class="discord" href="https://discord.gg/ecUxc9N"><img src="./d.svg" alt="Discord" /></a>
+
+<script>
+</script>
+
+</body>
+</html>

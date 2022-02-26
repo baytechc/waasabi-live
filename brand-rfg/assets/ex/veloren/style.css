@@ -1,0 +1,39 @@
+body {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body > :not(.backdrop) {
+  position: relative;
+  z-index: 1;
+}
+
+a.discord {
+  position: absolute;
+  border: ;
+  bottom: calc(2rem - 1em);
+  left: 2rem;
+}
+a.discord img {
+  height: 2rem;
+}

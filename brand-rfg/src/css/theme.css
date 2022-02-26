@@ -82,3 +82,17 @@
 /* .streambox__sidebar {
   background: rgba(12,0,36,.25);
 } */
+
+.activeContentTrigger {
+  background-image: url('/assets/ex/veloren/logo.png');
+  background-size: contain;
+  background-color: var(--c-purple-900);
+  background-repeat: no-repeat;
+  font-size: 0;
+  width: 8rem;
+  height: 4rem;
+  background-position: center;
+  border: 2px solid var(--c-purple-900);
+  border-radius: 2px;
+  cursor: pointer;
+}
