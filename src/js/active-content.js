@@ -20,7 +20,6 @@ console.log('AC:', type+'/'+endpoint, data);
     if (endpoint in CTYPES[type]) {
       const element = await CTYPES[type][endpoint](data);
       // TODO: manage and arrange multiple content boxes via their id-s
-      console.log(element);
       change(element);
     }
   }
@@ -32,6 +31,7 @@ export function change(newContent) {
 
   // Add new
   document.querySelector('main').appendChild(newContent)
+  newContent.dataset.active=true
 
   // Content sizing
   updateActiveContentSizing();
@@ -42,6 +42,6 @@ export function updateActiveContentSizing() {
 
   if (acw > 0) {
     document.querySelector('main').style = `--active-content-w: ${acw}px`;
-    return acw;  
+    return acw;
   }
 }

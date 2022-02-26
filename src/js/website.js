@@ -20,7 +20,6 @@ import('./immersive.js');
 
 let el=document.createElement('div')
 el.className="ac"
-el.dataset.active=false
 
 el.innerHTML='<button class="activeContentTrigger">Veloren</button>'
 
@@ -35,6 +34,8 @@ el.appendChild(ex)
 document.querySelector('main').appendChild(el);
 
 el.querySelector('.activeContentTrigger').addEventListener('click', e => {
+  el.dataset.active=true
+
   //ex=window.frames['ex_veloren'];
   exv=ex.contentDocument.querySelector('video')
 

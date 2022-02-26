@@ -9,7 +9,7 @@ export async function live(options) {
   await window.videoJsReady;
 
   // Video element exists?
-  let player; 
+  let player;
   try {
     player = videojs(cid);
   }
@@ -30,7 +30,7 @@ export async function live(options) {
     catch(e) {
       console.log(e);
     }
-    // TODO: mute detection    
+    // TODO: mute detection
   }
 
   return new Promise(resolve => {
@@ -38,7 +38,7 @@ export async function live(options) {
     // TODO: reuse the same code as in "idle()"
     const frag = document.createDocumentFragment();
     render(tVideoTag(options), frag);
-    
+
     const vElement = frag.querySelector('video');
 
     videojs(vElement, null, function() {
@@ -69,7 +69,7 @@ export async function ondemand(options) {}
 
 const tVideoTag = (p = {}) => html`<video
   id="${p.cid}"
-  class="streambox__video active_content video-js vjs-waasabi ${p.classes?.join(' ')}"
+  class="ac streambox__video active_content video-js vjs-waasabi ${p.classes?.join(' ')}"
   data-setup='{"liveui":"true"}'
   poster="${process.env.W_PREFIX}/assets/video-holder.jpg"
   preload="auto"

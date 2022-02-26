@@ -92,7 +92,27 @@
   width: 8rem;
   height: 4rem;
   background-position: center;
-  border: 2px solid var(--c-purple-900);
-  border-radius: 2px;
+  border: .5rem solid var(--c-purple-900);
+  border-radius: .5rem;
   cursor: pointer;
+}
+
+body > main {
+  display: grid;
+  grid-template: auto 6rem / repeat(auto-fill, 10rem);
+}
+.ac {
+	grid-row: 1;
+	grid-column: 1/-1;
+}
+.ac:not([data-active="true"]) {
+  grid-row: 2;
+	grid-column: auto;
+  place-self: center;
+}
+.ac .activeContentTrigger {
+	display: none;
+}
+.ac:not([data-active="true"]) .activeContentTrigger {
+	display: block;
 }
