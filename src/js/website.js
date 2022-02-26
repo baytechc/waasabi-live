@@ -21,8 +21,10 @@ import('./immersive.js');
 import { updateActiveContent } from './active-content.js'
 
 document.body.addEventListener('click', e => {
-  console.log(e)
   if (!e.target.classList.contains('activeContentTrigger')) {
+    return
+  }
+  if (e.target.classList.contains('noex')) {
     return
   }
 
@@ -62,7 +64,7 @@ el2.className="ac"
 el2.dataset.active=false
 
 const fsb = document.createElement('button')
-fsb.className = "activeContentTrigger fsb"
+fsb.className = "activeContentTrigger fsb noex"
 fsb.textContent = "Fullscreen"
 fsb.addEventListener('click', e => {
   const elem = document.querySelector('main');
