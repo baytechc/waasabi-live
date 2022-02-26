@@ -8,7 +8,7 @@ const CTYPES = {
   idle,
 };
 
-window.addEventListener('resize', updateActiveContentSizing);
+window.addEventListener('resize', updateActiveContent);
 
 
 export async function set(data) {
@@ -34,14 +34,16 @@ export function change(newContent) {
   newContent.dataset.active=true
 
   // Content sizing
-  updateActiveContentSizing();
+  updateActiveContent();
 }
 
-export function updateActiveContentSizing() {
-  const acw = document.querySelector('main > .active_content')?.clientWidth;
+export function updateActiveContent() {
+  const acc = document.querySelectorAll('main > .ac[data-active=true]')?.length || 0;
+  document.querySelector('main').style = `--acc: ${acc}`;
 
-  if (acw > 0) {
-    document.querySelector('main').style = `--active-content-w: ${acw}px`;
-    return acw;
-  }
+  // const acw = document.querySelector('main > .active_content')?.clientWidth;
+  // if (acw > 0) {
+  //   document.querySelector('main').style = `--active-content-w: ${acw}px`;
+  //   return acw;
+  // }
 }

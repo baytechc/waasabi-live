@@ -18,6 +18,8 @@ import('./webmonetization.js');
 import('./immersive.js');
 */
 
+import { updateActiveContent } from './active-content.js'
+
 let el=document.createElement('div')
 el.className="ac"
 
@@ -28,32 +30,36 @@ ex.id="ex_veloren"
 ex.className='content'
 ex.setAttribute('style','width: 100%;height: 100%;')
 ex.src = "/assets/ex/veloren/index.html"
-ex.hidden = true
+//ex.hidden = true
 el.appendChild(ex)
 
 document.querySelector('main').appendChild(el);
 
 el.querySelector('.activeContentTrigger').addEventListener('click', e => {
-  el.dataset.active=true
+  const isActive = !el.dataset.active
+  el.dataset.active = isActive ? 'true' : ''
 
   //ex=window.frames['ex_veloren'];
   exv=ex.contentDocument.querySelector('video')
 
-  if (ex.hidden) {
-    ex.hidden = false
+  console.log(el.dataset, isActive, exv)
+  if (isActive) {
+    //ex.hidden = false
 
     if (exv) {
       exv.volume = .5
       exv.muted = false
       exv.play()
+      console.log('just push play', exv.playing)
     }
   } else {
     if (exv) {
       exv.pause()
     }
 
-    ex.hidden = true
+    //ex.hidden = true
   }
+  updateActiveContent()
 })
 
 let el2=document.createElement('div')
