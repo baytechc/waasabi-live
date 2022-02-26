@@ -35,7 +35,14 @@ el.appendChild(ex)
 
 document.querySelector('main').appendChild(el);
 
-el.querySelector('.activeContentTrigger').addEventListener('click', e => {
+document.body.addEventListener('click', e => {
+  if (e.target.className !== "activeContentTrigger") {
+    return
+  }
+  e.preventDefault()
+  const el = e.target.parentNode
+  const ex = el.querySelector('.ac')
+
   const isActive = !el.dataset.active
   el.dataset.active = isActive ? 'true' : ''
 

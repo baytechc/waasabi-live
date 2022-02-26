@@ -59,7 +59,12 @@ export async function live(options) {
         console.log(e);
       }
 
-      resolve(player.el());
+      const PE = player.el()
+      const act = document.createElement('button');
+      act.className = "activeContentTrigger";
+      PE.appendChild(act)
+
+      resolve(PE);
     });
   });
 }

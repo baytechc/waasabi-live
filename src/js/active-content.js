@@ -29,7 +29,9 @@ export function change(newContent) {
   // Remove all
   // document.querySelectorAll('main > .active_content').forEach(c => c !== newContent ? c.remove() : null);
 
-  // Add new
+  // Add control button
+
+  // Add new content
   document.querySelector('main').appendChild(newContent)
   newContent.dataset.active=true
 
