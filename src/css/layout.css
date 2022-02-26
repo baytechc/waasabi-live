@@ -96,7 +96,7 @@ footer {
 
   /* The below properties only really affects landscape views
      on larger sizes only, in mobile view the sidebar is expanded
-     to scroll together with the page content */ 
+     to scroll together with the page content */
 
   /* Scroll long content */
   overflow-y: scroll;
@@ -152,16 +152,16 @@ footer {
       background-color: var(--c-decor);
       color: var(--c-highlight-text);
     }
-  
+
     &:hover, &:focus {
       border-color: white;
-    }  
+    }
   }
 }
 
 .home-button {
   padding: .33rem .5rem;
-  
+
   svg {
     height: 1rem;
   }
@@ -198,9 +198,9 @@ header nav {
   gap: 1rem;
   justify-content: center;
   align-items: center;
-  
+
   a {
-    font-family: "Fira Sans";
+    font-family: var(--c-flowtext);
     color: var(--c-decor);
     font-weight: 600;
     text-decoration: none;
@@ -209,12 +209,12 @@ header nav {
 
 footer {
   grid-area: footer;
-  
+
   display: grid;
   place-items: center;
   text-align: center;
 
-  font-family: "Fira Sans";
+  font-family: var(--c-flowtext);
   a {
     color: var(--c-highlight);
     text-decoration: none;
