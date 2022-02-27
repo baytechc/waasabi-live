@@ -6,6 +6,9 @@ import { until } from 'lit-html/directives/until.js';
 
 import { showContent } from '../js/sidebar.js';
 
+import { updateActiveContent } from '../js/active-content.js'
+
+
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 const SESSION_URL = process.env.WAASABI_SESSION_URL;
 
@@ -60,6 +63,7 @@ const startReplay = (e) => {
 
   const p = videoList[playbackId]
   const vElement = tVideoTag(p);
+
   render(vElement, document.querySelector('.main__content'));
 
   if (p.livestream.type != 'peertube') setTimeout(() => {
@@ -67,6 +71,9 @@ const startReplay = (e) => {
     video.configurePlayer(player);
     player.play();
   }, 10);
+
+  document.getElementById('v'+playbackId).dataset.active=true
+  updateActiveContent();
 }
 const tVideoThumb = (p) => {
   const id = p.livestream.playback_id;
@@ -91,7 +98,7 @@ const tVideoTag = (p) => {
   const poster = `https://image.mux.com/${id}/thumbnail.jpg?time=5`
 
   return html`<video-js id="v${id}"
-  class="replay__video active_content video-js vjs-waasabi waasabi-${provider}"
+  class="ac replay__video active_content video-js vjs-waasabi waasabi-${provider}"
   data-setup=""
   poster="${poster}"
   preload="auto"
@@ -117,7 +124,7 @@ const tVideoTagPeertube = (p) => {
 
   return html`<iframe
     id="v${id}"
-    class="replay__video active_content video-js vjs-waasabi waasabi-${provider}"
+    class="ac replay__video active_content video-js vjs-waasabi waasabi-${provider}"
     width="560"
     height="315"
     sandbox="allow-same-origin allow-scripts allow-popups"
