@@ -16,6 +16,8 @@ function sources(root) {
   const sources =   [
     // Fonts
     'assets/fonts/**/*.css',
+    // Experiences
+    'assets/ex/ex.css',
     // Video.JS
     'assets/videojs/**/*.css',
 

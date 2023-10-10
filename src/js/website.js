@@ -89,19 +89,20 @@ addExperience({
   src: '/assets/ex/paddlepunks/index.html'
 })
 
-addExperience({
-  id: 'concordium',
-  title: 'Concordium',
-  src: '/assets/ex/concordium/index.html'
-})
 */
+
+addExperience({
+  id: 'huawei',
+  title: 'Live stream partner: Huawei',
+  src: '/assets/ex/huawei/index.html'
+})
 
 function addExperience(data) {
   const { id, title, src, } = data;
   let el=document.createElement('div')
   el.className="ac"
 
-  el.innerHTML=`<button class="activeContentTrigger ex-${id}">${title}</button>`
+  el.innerHTML=`<button class="activeContentTrigger ex-${id}" title="${title}">${title}</button>`
 
   let ex=document.createElement('iframe')
   ex.id="ex_"+id
