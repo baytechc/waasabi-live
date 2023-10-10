@@ -64,8 +64,8 @@ export default (ctx) => ({
   generate: {
     header: '',
     from: Array.from(sources(ctx?.options.root)),
-    outdir: join('_site', config.PREFIX),
+    outdir: join(config.BUILD_DIR, config.PREFIX),
     // If no outfile don't concat into single file
-    outfile: join('_site', config.PREFIX, 'style.css'),
+    outfile: join(config.BUILD_DIR, config.PREFIX, 'style.css'),
   },
 });

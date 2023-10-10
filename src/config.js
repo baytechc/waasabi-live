@@ -1,6 +1,6 @@
 export default {
-  "WAASABI_BACKEND": "https://backend.rustfest.global",
-  "WAASABI_GRAPHQL_WS": "wss://backend.rustfest.global/graphql",
+  WAASABI_BACKEND: "https://backend.rustfest.global",
+  WAASABI_GRAPHQL_WS: "wss://backend.rustfest.global/graphql",
 
   WAASABI_SESSION_URL: "https://rustfest.global/session/%SLUG%/",
 
@@ -13,7 +13,7 @@ export default {
   WAASABI_MATRIX_CLIENT_URL: "https://rustch.at",
   WAASABI_MATRIX_API_URL: "https://rustch.at",
 
-  WAASABI_BRAND: "brand-rfg",
+  WAASABI_BRAND: "brand-eurorust",
 
   BUILD_DIR: "_site",
   BUILD_COPY: {
@@ -27,13 +27,11 @@ export default {
   TITLE: "RustFest LATAM Live!",
   DESCRIPTION: "Conferencia de Rust comunitaria en español e inglés. Community Rust conference in English & Spanish.",
 
-  WEBSITE: "https://rustfest.global/",
-  TWITTER: "@rustfest",
+  WEBSITE: "https://eurorust.eu",
+  TWITTER: "@euro_rust",
 
-  COC_LINK: "https://rustfest.global/coc",
+  COC_LINK: "https://eurorust.eu/code-of-conduct/",
 
-  SOCIALIMAGE_LINK: "https://rustfest.world/assets/posts/2022/2021_latam_is_on.png",
-  SOCIALIMAGE_ALT: "",
-
-  PAYMENTPTR: "$ilp.uphold.com/2YdXerkKdULj",
+  SOCIALIMAGE_LINK: "https://eurorust.eu/images/euro-rust-2023-social.png",
+  SOCIALIMAGE_ALT: "EuroRust",
 };

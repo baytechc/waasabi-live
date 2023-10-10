@@ -76,7 +76,7 @@ fsb.addEventListener('click', e => {
 el2.appendChild(fsb)
 document.querySelector('main').appendChild(el2);
 
-
+/*
 addExperience({
   id: 'veloren',
   title: 'Veloren',
@@ -94,6 +94,7 @@ addExperience({
   title: 'Concordium',
   src: '/assets/ex/concordium/index.html'
 })
+*/
 
 function addExperience(data) {
   const { id, title, src, } = data;
