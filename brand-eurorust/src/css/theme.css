@@ -22,16 +22,16 @@ Sourced via postcss.config:
 
   --c-background: linear-gradient(180deg, var(--c-header), var(--black)); /*blue*/
   --c-flowtext: #fff;
-  --c-title: var(--c-yellow-500);
+  --c-title: var(--white);
 
   --c-background-alt: rgba(0,0,0,.6); /*gray*/
   --c-flowtext-alt: var(--c-flowtext);
 
-  --c-decor: var(--c-purple-500); /*red*/
+  --c-decor: var(--transparent-white); /*red*/
   --c-highlight: var(--pink); /*yellow*/
   --c-highlight-text: #fff;
 
-  --c-forms: var(--c-yellow-500);
+  --c-forms: #fbf;
 }
 
 .content button.sbc,

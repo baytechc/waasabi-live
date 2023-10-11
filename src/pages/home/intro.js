@@ -1,34 +1,37 @@
 import { html } from 'lit-html';
 
-import { replaysButtonHandler } from '../replays.js';
+import { loginButtonHandler } from '../login.js';
 import { chatButtonHandler } from '../chat/chat.js';
 
-const replays = { open: replaysButtonHandler };
+const login = { open: loginButtonHandler };
 const chat = { open: chatButtonHandler };
+const tickets = { open() {
+  window.open(`https://eurorust.eu/?tito=%2Fevents-matter%2Feurorust-2023%2Fen%2Fregistrations%2Fnew%3Fprefill%3D%257B%257D`)
+}}
 
 export default html`
 
 <h2>Welcome!</h2>
 
 <p>
-  You will be able to watch the live stream right here, the stream will start automatically at the scheduled time.<br>
+  Use the link in the email you have received to access the live stream
+  during the event, and to be able to watch the talk replays.<br>
+  You may also click below to log in using your registered email address:
 
   <br>
-  <button class="sbc" @click="">Livestream</button>
-  <button class="sbc" @click="">Schedule</button>
+  <button class="sbc" @click="${login.open}">Login</button><br>
 
-</p><p>
-  Re-watch recordings of previous streams anytime, by clicking the "Replays" button:
-  
-  <br><button class="sbc" @click=${replays.open}>Replays</button>
-</p><br>
+  If you don't have a ticket yet you can easily purchase one by clicking
+  on the link below. You will get access to all talk recordings and the
+  remainder of the live stream instantly:
+  <br>
+  <button class="sbc" @click="${tickets.open}">Tickets</button>
+</p>
 
 <p>
   You can ask questions and chat with folks on our Matrix channel:
 
   <br><button class="sbc" @click=${chat.open}>Chat</button>
-
-  <br><input type="checkbox" id="showchat" checked>&nbsp;<label for="showchat">Show chat messages</label>
 </p>
 
 `;

@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 
 import C_HOME_INTRO from './home/intro.js';
+import C_HOME_INTRO_LOGGEDIN from './home/intro-loggedin.js';
 
 
 import { status as loggedin, loginButtonHandler } from '../js/auth.js';

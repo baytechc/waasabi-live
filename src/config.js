@@ -1,6 +1,6 @@
 export default {
-  WAASABI_BACKEND: "https://backend.rustfest.global",
-  WAASABI_GRAPHQL_WS: "wss://backend.rustfest.global/graphql",
+  WAASABI_BACKEND: "https://watch.eurorust.eu/api/v1",
+  WAASABI_GRAPHQL_WS: "wss://watch.eurorust.eu/events",
 
   WAASABI_SESSION_URL: "https://rustfest.global/session/%SLUG%/",
 
@@ -24,8 +24,8 @@ export default {
 
   PREFIX: "",
 
-  TITLE: "RustFest LATAM Live!",
-  DESCRIPTION: "Conferencia de Rust comunitaria en español e inglés. Community Rust conference in English & Spanish.",
+  TITLE: "EuroRust 2023",
+  DESCRIPTION: "A Rust conference from the European Rust community.",
 
   WEBSITE: "https://eurorust.eu",
   TWITTER: "@euro_rust",

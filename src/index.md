@@ -6,6 +6,7 @@
 <body>
   <header>
     <a href="${config.WEBSITE}" target="_blank"><img src="${config.PREFIX}/assets/logo.png" alt="${TITLE}"></a>
+    <span class="streambox__popup"></span>
   </header>
 
   <main class="main__content"></main>
