@@ -27,7 +27,16 @@ async function init() {
   onSignal(sig => handleEvent(sig.data));
 
   // Bootstrap live stream
-  const signals = await fetch(`${WAASABI_BACKEND}/event-manager/client/livestream`).then(r => r.json());
+  let jwt = 'test';
+  const signals = await fetch(
+    `${WAASABI_BACKEND}/content/livestream`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({jwt})
+    }
+  ).then(r => r.json());
 
   if (signals?.length > 0) {
     for (const sig of signals) {

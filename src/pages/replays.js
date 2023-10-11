@@ -22,9 +22,17 @@ export const replaysButtonHandler = async (e) => {
 
 const videoList = {}
 const tReplays = (p) => {
+  let jwt = 'test';
+
   const list =
     window.videoJsReady
-    .then(() => fetch(`${WAASABI_BACKEND}/event-manager/client/replays`))
+    .then(() => fetch(`${WAASABI_BACKEND}/content/replays`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({jwt})
+    }))
     .then(r => r.json())
     .then(items => items.map(item => {
       const id = item.livestream.playback_id;

@@ -29,7 +29,7 @@ export default html`
 <p>
   Re-watch recordings of previous streams anytime, by clicking the "Replays" button:
   <br>
-  <button class="sbc" @click="@replays.open">Replays</button>
+  <button class="sbc" @click="${replays.open}">Replays</button>
 </p>
 
 <p>
