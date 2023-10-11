@@ -9,6 +9,7 @@ import * as streamPeertube from './stream-peertube.js';
 
 import * as activeContent from './active-content.js';
 
+import { status, JWT } from './auth.js'
 
 const STREAM_TYPES = {
   hls: streamHls,
@@ -27,14 +28,12 @@ async function init() {
   onSignal(sig => handleEvent(sig.data));
 
   // Bootstrap live stream
-  let jwt = 'test';
   const signals = await fetch(
     `${WAASABI_BACKEND}/content/livestream`, {
-      method: 'post',
+      method: 'get',
       headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({jwt})
+        'Authorization': 'Bearer '+JWT()
+      }
     }
   ).then(r => r.json());
 
@@ -47,8 +46,9 @@ async function init() {
 
 function handleEvent(data) {
   const { type, event } = data;
-  console.log('handleEvent:', data);
-  if (type == 'livestream') {
+  //console.log('handleEvent:', data);
+
+  if (type === 'livestream') {
     const streamType = data.livestream.type ?? 'hls';
 
     if (streamType in STREAM_TYPES) {

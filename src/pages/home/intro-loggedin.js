@@ -12,8 +12,6 @@ function openSchedule(day = 1) {
   window.open(`https://eurorust.eu/schedule/day/${day}/`)
 }
 
-console.log('Logged in:', loggedin())
-
 export default html`
 
 <h2>Welcome to the EuroRust 2023 Live Stream</h2>

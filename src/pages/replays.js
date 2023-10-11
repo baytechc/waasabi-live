@@ -8,6 +8,7 @@ import { showContent } from '../js/sidebar.js';
 
 import { updateActiveContent } from '../js/active-content.js'
 
+import { status, JWT } from '../js/auth.js'
 
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 const SESSION_URL = process.env.WAASABI_SESSION_URL;
@@ -22,22 +23,19 @@ export const replaysButtonHandler = async (e) => {
 
 const videoList = {}
 const tReplays = (p) => {
-  let jwt = 'test';
-
   const list =
     window.videoJsReady
     .then(() => fetch(`${WAASABI_BACKEND}/content/replays`, {
-      method: 'post',
+      method: 'get',
       headers: {
-        'Content-Type': 'application/json'
+        'Authorization': 'Bearer '+JWT()
       },
-      body: JSON.stringify({jwt})
     }))
     .then(r => r.json())
     .then(items => items.map(item => {
-      const id = item.livestream.playback_id;
-      videoList[id] = item;
-      return tReplayItem(item)
+      const id = item.data.livestream.playback_id;
+      videoList[id] = item.data;
+      return tReplayItem(videoList[id])
      }));
 
   return html`<div class="sidebar-content c-chat">
