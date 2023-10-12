@@ -30,8 +30,8 @@ async function init() {
   ))
 
   // Bootstrap live stream
-  const signals = await fetch(
-    `${WAASABI_BACKEND}/content/livestream`, {
+  const bootstrap = async (lastid = 0) => fetch(
+    `${WAASABI_BACKEND}/content/livestream`+(lastid>0?'?lastid='+lastid:''), {
       method: 'get',
       headers: {
         'Authorization': 'Bearer '+JWT()
@@ -39,11 +39,23 @@ async function init() {
     }
   ).then(r => r.json());
 
-  if (signals?.length > 0) {
-    for (const sig of signals) {
-      await handleEvent(sig.data);
-    }
+  const signals = (await bootstrap()) || []
+  for (const sig of signals) {
+    await handleEvent(sig.data)
   }
+
+  // Poll the backend in case the websocket is borked
+  let lastid = Math.max(signals?.map(s => s.id))
+  const poll = async () => {
+    const pollsig = (await bootstrap(lastid)) || []
+    for (const sig of pollsig) {
+      await handleEvent(sig.data)
+    }
+  
+    lastid = Math.max(pollsig?.map(s => s.id))
+    setTimeout(poll, 5000+Math.random()*5000)
+  }
+  poll()
 }
 
 function handleEvent(data) {

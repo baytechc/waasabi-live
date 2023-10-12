@@ -37,7 +37,9 @@ function connect(opts = {}) {
   const wsLink = new WebSocketLink({
     uri: GQL_LINK_WS,
     options: {
-      reconnect: true,
+      //disable reconnects until we fix the connection issue
+      //reconnect: true,
+      reconnect: false,
       connectionParams
     }
   });
