@@ -52,7 +52,7 @@ async function init() {
       await handleEvent(sig.data)
     }
   
-    lastid = Math.max(pollsig?.map(s => s.id))
+    lastid = Math.max(lastid, Math.max(pollsig?.map(s => s.id)))
     setTimeout(poll, 5000+Math.random()*5000)
   }
   poll()
