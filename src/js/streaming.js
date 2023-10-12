@@ -25,7 +25,9 @@ async function init() {
   // });
 
   // Listen to livestream events
-  onSignal(sig => handleEvent(sig.data));
+  onSignal(sig => handleEvent(
+    typeof sig.data === 'object' ? sig.data : JSON.parse(sig.data)
+  ))
 
   // Bootstrap live stream
   const signals = await fetch(

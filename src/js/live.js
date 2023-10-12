@@ -10,10 +10,8 @@ const GQL_LINK_WS = process.env.WAASABI_GRAPHQL_WS;
 
 const SUB_SIGNALS = gql`
 subscription OnSignal {
-  afterCreateSignal {
-    signal {
-      event, data, ts,
-    }
+  newPushEvent {
+    id, event, data, created_at,
   }
 }`;
 const SUB_CHAT_MESSAGES = gql`
@@ -67,7 +65,7 @@ function connect(opts = {}) {
 const gqlConnection = connect({});
 
 const gqlSignals = gqlConnection.subscribe({ query: SUB_SIGNALS });
-const gqlChatMessages = gqlConnection.subscribe({ query: SUB_CHAT_MESSAGES });
+// const gqlChatMessages = gqlConnection.subscribe({ query: SUB_CHAT_MESSAGES });
 
 export function onSignal(cb) {
   if (typeof cb !== 'function') {
@@ -77,20 +75,20 @@ export function onSignal(cb) {
 
   gqlSignals.subscribe({
     next(incoming) {
-      cb(incoming.data.afterCreateSignal.signal);
+      cb(incoming.data.newPushEvent);
     }
   });
 }
 
-export function onChatMessage(cb) {
-  if (typeof cb !== 'function') {
-    console.warn('Empty subscription request.');
-    return;
-  }
+// export function onChatMessage(cb) {
+//   if (typeof cb !== 'function') {
+//     console.warn('Empty subscription request.');
+//     return;
+//   }
 
-  gqlChatMessages.subscribe({
-    next(incoming) {
-      cb(incoming.data.afterCreateChatMessage.chatMessage);
-    }
-  });
-}
+//   gqlChatMessages.subscribe({
+//     next(incoming) {
+//       cb(incoming.data.afterCreateChatMessage.chatMessage);
+//     }
+//   });
+// }

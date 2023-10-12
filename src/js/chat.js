@@ -1,5 +1,5 @@
-import { onChatMessage } from './live.js';
-
+// import { onChatMessage } from './live.js';
+function onChatMessage() { /* stub */ }
 
 async function init() {
   let messagetimer;
