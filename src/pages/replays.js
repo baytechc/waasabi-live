@@ -51,10 +51,7 @@ ${until(list, html`<span>Loading talk recordings...</span>`)}
 
 const tReplayItem = (p) => {
   const title = p.title;
-  const duration = [
-    Math.floor(p.event_data.livestream.length / 60),
-    Math.floor(p.event_data.livestream.length % 60)
-  ].join(':')
+  const duration = fancyTime(p.event_data.livestream.length)
 
   const idslug = idSlug(p.session.id, p.session.title)
   const linkedTitle = SESSION_URL ? html`<a href="${SESSION_URL.replace('%SLUG%', idslug)}" target="_blank">${title}</a>` : undefined;
@@ -164,6 +161,14 @@ function idSlug(id, label, locale = 'en') {
   )
 }
 
-
-
-
+function fancyTime(l) {
+  return [
+    l >= 3600 ? ( l / 3600)|0 : undefined,
+    l >= 60 ? ( l % 3600 / 60)|0 : undefined,
+    ( l % 60)|0
+  ].map(
+    (v,i) => (v !== undefined && i>0 && v<10 ? '0'+v : v)
+  ).filter(
+    c => c !== undefined
+  ).join(':')
+}
