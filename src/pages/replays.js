@@ -50,17 +50,18 @@ ${until(list, html`<span>Loading talk recordings...</span>`)}
 `};
 
 const tReplayItem = (p) => {
-  const idslug = idSlug(p.session.id,p.session.title)
-  const link = SESSION_URL ? SESSION_URL.replace('%SLUG%',idslug) : '';
-  const title = link ? html`<a href="${link}" target="_blank">${p.session.title}</a>` : p.session.title;
+  const title = p.title;
   const duration = [
     Math.floor(p.event_data.livestream.length / 60),
     Math.floor(p.event_data.livestream.length % 60)
   ].join(':')
 
+  const idslug = idSlug(p.session.id, p.session.title)
+  const linkedTitle = SESSION_URL ? html`<a href="${SESSION_URL.replace('%SLUG%', idslug)}" target="_blank">${title}</a>` : undefined;
+
   // TODO: show p.date (time recorded)
   return html`
-  <h3>${title}</h3>
+  <h3>${linkedTitle ? linkedTitle : title}</h3>
   <p>${p.session.description} (${duration})</p>
   ${tVideoThumb(p)}
   `;
