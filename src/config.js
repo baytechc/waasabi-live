@@ -1,6 +1,5 @@
 export default {
-  //WAASABI_BACKEND: "https://watch.eurorust.eu/api/v1",
-  WAASABI_BACKEND: "http://localhost:9000",
+  WAASABI_BACKEND: "https://watch.eurorust.eu/api/v1",
   WAASABI_GRAPHQL_WS: "wss://watch.eurorust.eu/events",
 
   WAASABI_SESSION_URL: "",
