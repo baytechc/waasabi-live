@@ -5,8 +5,15 @@ import { chatButtonHandler } from '../chat/chat.js';
 
 import { status as loggedin } from '../../js/auth.js';
 
+const CHAT_LINK = process.env.WAASABI_CHAT_URL;
+const chatBtn = (e) => {
+  e.preventDefault();
+  window.open(CHAT_LINK,'_blank')
+}
+
 const replays = { open: replaysButtonHandler };
-const chat = { open: chatButtonHandler };
+//const chat = { open: chatButtonHandler };
+const chat = { open: chatBtn };
 
 function openSchedule(day = 1) {
   window.open(`https://eurorust.eu/schedule/day/${day}/`)
