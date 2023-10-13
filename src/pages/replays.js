@@ -33,8 +33,8 @@ const tReplays = (p) => {
     }))
     .then(r => r.json())
     .then(items => items.map(item => {
-      const id = item.data.livestream.playback_id;
-      videoList[id] = item.data;
+      const id = item.event_data.livestream.playback_id;
+      videoList[id] = item;
       return tReplayItem(videoList[id])
      }));
 
@@ -53,10 +53,15 @@ const tReplayItem = (p) => {
   const idslug = idSlug(p.session.id,p.session.title)
   const link = SESSION_URL ? SESSION_URL.replace('%SLUG%',idslug) : '';
   const title = link ? html`<a href="${link}" target="_blank">${p.session.title}</a>` : p.session.title;
+  const duration = [
+    Math.floor(p.event_data.livestream.length / 60),
+    Math.floor(p.event_data.livestream.length % 60)
+  ].join(':')
 
   // TODO: show p.date (time recorded)
   return html`
-  <h4>${title}</h4>
+  <h3>${title}</h3>
+  <p>${p.session.description} (${duration})</p>
   ${tVideoThumb(p)}
   `;
 }
@@ -72,7 +77,7 @@ const startReplay = (e) => {
 
   render(vElement, document.querySelector('.main__content'));
 
-  if (p.livestream.type != 'peertube') setTimeout(() => {
+  if (p.event_data.livestream.type != 'peertube') setTimeout(() => {
     const player = videojs('v'+playbackId, video.playerConfig());
     video.configurePlayer(player);
     player.play();
@@ -82,8 +87,8 @@ const startReplay = (e) => {
   updateActiveContent();
 }
 const tVideoThumb = (p) => {
-  const id = p.livestream.playback_id;
-  const provider = p.livestream.type;
+  const id = p.event_data.livestream.playback_id;
+  const provider = p.event_data.livestream.type;
   const thumbnail = provider == 'peertube'
     ? `/static/thumbnails/${p.video.Thumbnails[0].filename}`
     : `https://image.mux.com/${id}/thumbnail.jpg?time=5`
@@ -97,8 +102,8 @@ const tVideoThumb = (p) => {
 }
 
 const tVideoTag = (p) => {
-  const id = p.livestream.playback_id;
-  const provider = p.livestream.type;
+  const id = p.event_data.livestream.playback_id;
+  const provider = p.event_data.livestream.type;
   if (provider == 'peertube') return tVideoTagPeertube(p);
 
   const poster = `https://image.mux.com/${id}/thumbnail.jpg?time=5`
@@ -124,8 +129,8 @@ const tVideoTag = (p) => {
 `;
 }
 const tVideoTagPeertube = (p) => {
-  const id = p.livestream.playback_id;
-  const provider = p.livestream.type;
+  const id = p.event_data.livestream.playback_id;
+  const provider = p.event_data.livestream.type;
   const poster =  `/static/thumbnails/${p.video.Thumbnails[0].filename}`;
 
   return html`<iframe
