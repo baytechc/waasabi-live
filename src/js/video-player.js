@@ -1,6 +1,6 @@
-import videojs from 'video.js';
-import 'videojs-contrib-quality-levels';
-import 'videojs-hls-quality-selector';
+import VideoJS from 'video.js';
+//import QualitySelectorHls from 'videojs-quality-selector-hls'
+
 
 async function init() {
   // CSS
@@ -10,8 +10,10 @@ async function init() {
   //document.head.appendChild(videojsStyle);
   // - disabled, we add this to the site CSS
 
-  window.videojs = videojs;
+  videojs = window.videojs ?? VideoJS;
   window.videoJsReady = Promise.resolve(videojs);
+
+  //videojs.registerPlugin('qualitySelectorHls', QualitySelectorHls);
 }
 
 
@@ -25,17 +27,24 @@ export function playerConfig(opts = {}) {
 
 export function configurePlayer(player, opts = {}) {
   // TODO: run playerConfig(opts) on player
-  player.hlsQualitySelector({ displayCurrentQuality: true });
 
+  // This is disabled because every existing version/fork of the library is broken
+  // Symptom: infinite buffering on quality switch, chunks stop downloading
+  // Needs further debugging as automatic switching on viewport resize usually works,
+  // but observed to occasionally break, perhaps the same issue as:
+  // https://github.com/videojs/video.js/issues/7107
+
+  //player.qualitySelectorHls({
+  // displayCurrentQuality: true,
+  //})
+
+  // this is now included built-in
   const ql = player.qualityLevels();
 
   ql.on('change', (e) => {
-    const sel = ql.selectedIndex;
-    if (sel === -1) {
-      console.log('Auto quality level selected.');
-    } else {
-      const q = ql[sel];
-      console.log(`Quality level selected: #${sel} (${q.width}x${q.height}, ${q.bitrate/1024|0}kbps)`);
+    if (ql.selectedIndex !== -1) {
+      const { width, height, bitrate } = ql[ql.selectedIndex]
+      console.log(`Quality level selected: #${ql.selectedIndex} (${width}x${height}, ${bitrate/1024|0}kbps)`)
     }
   });
 }

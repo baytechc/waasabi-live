@@ -21,7 +21,7 @@ export const replaysButtonHandler = async (e) => {
   showContent(tReplays({}));
 }
 
-const videoList = {}
+const videoList = new Map()
 const tReplays = (p) => {
   const list =
     window.videoJsReady
@@ -33,9 +33,9 @@ const tReplays = (p) => {
     }))
     .then(r => r.json())
     .then(items => items.map(item => {
-      const id = item.event_data.livestream.playback_id;
-      videoList[id] = item;
-      return tReplayItem(videoList[id])
+      const id = item.event_data.livestream.playback_id
+      videoList.set(id, item)
+      return tReplayItem(item)
      }));
 
   return html`<div class="sidebar-content c-chat">
@@ -70,7 +70,7 @@ const startReplay = (e) => {
 
   e.preventDefault();
 
-  const p = videoList[playbackId]
+  const p = videoList.get(playbackId)
   const vElement = tVideoTag(p);
 
   render(vElement, document.querySelector('.main__content'));
