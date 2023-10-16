@@ -75,13 +75,43 @@ const startReplay = (e) => {
 
   render(vElement, document.querySelector('.main__content'));
 
-  if (p.event_data.livestream.type != 'peertube') setTimeout(() => {
-    const player = videojs('v'+playbackId, video.playerConfig());
-    video.configurePlayer(player);
-    player.play();
-  }, 10);
+  if (p.event_data.livestream.type != 'peertube') {
+    const player = videojs('replays_player', video.playerConfig());
+    console.log(player)
 
-  document.getElementById('v'+playbackId).dataset.active=true
+    if (player) {
+      video.configurePlayer(player);
+
+      const poster = posterForId(playbackId)
+      const src = srcForId(playbackId)
+      const media = {
+        poster,
+        src: {
+          type: 'application/x-mpegURL',
+          src
+        }
+      }
+
+      player.loadMedia(media, () => {
+        console.log('Media loaded: ', media)
+        player.play()
+          .then(r => console.log('Playback started', r))
+          .catch(e => console.error('Failed to start playing', e))
+      })
+      player.load()
+
+      const el = player.el()
+      if (el) {
+        el.dataset.vid = vidForId(playbackId)
+        el.dataset.active = true
+      } else {
+        console.log('Video element not found')
+      }
+    } else {
+      console.log('Player not ready')
+    }
+  }
+
   updateActiveContent();
 }
 const tVideoThumb = (p) => {
@@ -104,27 +134,17 @@ const tVideoTag = (p) => {
   const provider = p.event_data.livestream.type;
   if (provider == 'peertube') return tVideoTagPeertube(p);
 
-  const poster = `https://image.mux.com/${id}/thumbnail.jpg?time=5`
+  const poster = posterForId(id)
+  const src = srcForId(id)
 
-  return html`<video-js id="v${id}"
+  return html`<video-js id="replays_player"
   class="ac replay__video active_content video-js vjs-waasabi waasabi-${provider}"
   data-setup=""
-  poster="${poster}"
   preload="auto"
   controls
+  autoplay
 >
-<source type="application/x-mpegURL" src="https://stream.mux.com/${id}.m3u8">
-<p class="vjs-no-js">
-  To view this video please enable JavaScript, and consider upgrading to a
-  web browser that
-  <a href="https://videojs.com/html5-video-support/" target="_blank"
-    >supports HTML5 video</a
-  >
-</p>
-</video-js>
-<br>
-<br>
-`;
+</video-js>`;
 }
 const tVideoTagPeertube = (p) => {
   const id = p.event_data.livestream.playback_id;
@@ -171,4 +191,16 @@ function fancyTime(l) {
   ).filter(
     c => c !== undefined
   ).join(':')
+}
+
+function srcForId(id) {
+  return `https://stream.mux.com/${id}.m3u8`
+}
+
+function posterForId(id) {
+  return `https://image.mux.com/${id}/thumbnail.jpg?time=5`
+}
+
+function vidForId(id) {
+  return 'v'+id
 }
