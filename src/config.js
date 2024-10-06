@@ -1,6 +1,6 @@
 export default {
-  WAASABI_BACKEND: (process.env.NODE_ENV==='production' ? "https://watch.eurorust.eu/api/v1" : "http://localhost:9000"),
-  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' ? "wss://watch.eurorust.eu/events" : "ws://localhost:9000/events"),
+  WAASABI_BACKEND: (process.env.NODE_ENV==='production' ? "https://eurorust-2024.rustfest.family/api/v1" : "http://localhost:9000"),
+  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' ? "wss://eurorust-2024.rustfest.family/events" : "ws://localhost:9000/events"),
 
   WAASABI_SESSION_URL: "",
 
@@ -15,7 +15,7 @@ export default {
   WAASABI_MATRIX_CLIENT_URL: "https://rustch.at",
   WAASABI_MATRIX_API_URL: "https://rustch.at",
 
-  WAASABI_BRAND: "brand-eurorust",
+  WAASABI_BRAND: "brand-eurorust24",
 
   BUILD_DIR: "_site",
   BUILD_COPY: {
@@ -26,14 +26,14 @@ export default {
 
   PREFIX: "",
 
-  TITLE: "EuroRust 2023",
-  DESCRIPTION: "A Rust conference from the European Rust community.",
+  TITLE: "EuroRust 2024",
+  DESCRIPTION: "EuroRust is a 2 day conference for the European Rust community – October 10th & 11th, 2024 – in Vienna & online",
 
   WEBSITE: "https://eurorust.eu",
   TWITTER: "@euro_rust",
 
   COC_LINK: "https://eurorust.eu/code-of-conduct/",
 
-  SOCIALIMAGE_LINK: "https://eurorust.eu/images/euro-rust-2023-social.png",
+  SOCIALIMAGE_LINK: "https://eurorust.eu/images/og-image.png",
   SOCIALIMAGE_ALT: "EuroRust",
 };

@@ -1,0 +1,117 @@
+/*
+Sourced via postcss.config:
+@import "/assets/ex/ex.css";
+@import "/assets/fonts/poppins.css";
+*/
+
+:root {
+	--black: #000000;
+	--dark-gray: #595959;
+	--pink: #f4025b;
+	--white: #ffffff;
+	--transparent-white: rgba(255, 255, 255, 0.1);
+	--transparent-gray: rgba(255, 255, 255, 0.4);
+	--neon-green: #00ffc4;
+
+	--deep-blue: #00e;
+	--dark-blue: #006;
+	--lightpink: #fbf;
+}
+
+:root {
+  --flowtext-font: "Poppins", sans-serif;
+	--title-font: monospace;
+
+  --c-header: var(--black);
+
+  --c-background: linear-gradient(180deg, var(--c-header), var(--black)); /*blue*/
+  --c-flowtext: #fff;
+  --c-title: var(--white);
+
+  --c-background-alt: rgba(0,0,0,.6); /*gray*/
+  --c-flowtext-alt: var(--c-flowtext);
+
+  --c-decor: var(--transparent-white); /*red*/
+  --c-highlight: var(--lightpink); /*yellow*/
+  --c-highlight-text: #fff;
+
+  --c-forms: #fbf;
+}
+
+.content button.sbc,
+.sidebar-content button.sbc {
+  letter-spacing: initial;
+  font-size: 1.1rem;
+}
+
+/* .streambox__sidebar {
+  background: rgba(12,0,36,.25);
+} */
+
+.activeContentTrigger {
+}
+
+body > main {
+  display: grid;
+  grid-template: auto 6rem / repeat(12, 1fr);
+	gap: 1rem;
+}
+
+
+body {
+	background-image: url(/assets/bgsq.png);
+	background-size: cover;
+	background-position: top left;
+	background-color: var(--black);
+	background-repeat: no-repeat;
+}
+
+.sidebar-content h2, .sidebar-content h3 {
+	color: var(--white);
+	/*text-shadow: 1px 1px 0px var(--pink),-1px -1px 0px var(--pink),1px -1px 0px var(--pink),-1px 1px 0px var(--pink),0 4px 21px var(--pink);*/
+}
+
+.content button.sbc,
+.home-button,
+.sidebar-content button.sbc {
+	color: var(--deep-blue);
+	font-size: 18px;
+	font-family: monospace;
+	letter-spacing: 0;
+	text-align: center;
+	line-height: 32px;
+	border: 2px solid var(--dark-blue);
+	border-radius: 0;
+	padding: .75rem 2.5rem;
+
+	/*display: flex;
+	align-items: center;*/
+}
+
+.content button.sbc:not([disabled]):hover,
+.home-button:not([disabled]):hover,
+.sidebar-content button.sbc:not([disabled]):hover {
+	background-color: var(--dark-gray);
+	border-color: var(--pink);
+	color: var(--c-highlight-text);
+}
+
+.sidebar-content button.sbc,
+.sidebar-content button.sbc:not(:disabled) {
+  background-color: transparent;
+  border: 2px solid white;
+  text-transform: none;
+}
+.sidebar-content button.sbc:disabled {
+  opacity: .25;
+}
+
+.sidebar-content button.sbc:not(:disabled):hover {
+  border-image-slice: 1;
+  border-image-source: linear-gradient(65deg, #59decb 0%, #3b63e7 60%, #de59cc 100%);
+  background-color: rgba(255,255,255,.1);
+}
+
+a {
+	text-decoration-thickness: 2px;
+}

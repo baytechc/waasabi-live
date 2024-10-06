@@ -45,7 +45,7 @@ export function goHomeButton(p) {
   const frag = document.createDocumentFragment();
 
   render(html`
-<button class="sbc" @click=${goHomeButtonHandler}>&lt; back</button>
+<button class="sbc back" @click=${goHomeButtonHandler}>⏴ Back</button>
   `, frag);
 
 return frag;

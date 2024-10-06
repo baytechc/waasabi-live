@@ -24,12 +24,12 @@ const tLoginStart = (p) => {
 
 <p>Please log in with your email address that you have used to purchase a ticket.</p>
 
-<h3>E-mail address:</h3>
+<h3><label for="loginemail">E-mail address</label></h3>
 
-<input type="email" placeholder="me@mymail.com"
+<input type="email" id="loginemail" placeholder="me@mymail.com"
   name="email" required>
 
-<p>We will send you a numeric code to confirmation the ownership and log you in</p>
+<p>We will send you a numeric code to confirm and log you in.</p>
 
 <button class="sbc inline" @click=${loginHandler}>Receive Code</button>
 </fieldset>
