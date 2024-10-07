@@ -16,6 +16,9 @@ export default {
   WAASABI_MATRIX_API_URL: "https://rustch.at",
 
   WAASABI_BRAND: "brand-eurorust24",
+  WAASABI_EVENT_TITLE: "EuroRust 2024",
+
+  // All WAASABI_* variables are exposed to frontend code via process.env.* using ESBuild
 
   BUILD_DIR: "_site",
   BUILD_COPY: {

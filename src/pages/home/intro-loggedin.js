@@ -15,13 +15,15 @@ const replays = { open: replaysButtonHandler };
 //const chat = { open: chatButtonHandler };
 const chat = { open: chatBtn };
 
+const EVENT_TITLE = process.env.WAASABI_EVENT_TITLE;
+
 function openSchedule(day = 1) {
   window.open(`https://eurorust.eu/schedule/day/${day}/`)
 }
 
 export default html`
 
-<h2>Welcome to the EuroRust 2023 Live Stream</h2>
+<h2>Welcome to the ${EVENT_TITLE} Live Stream</h2>
 
 <p>
   You will be able to watch the live stream right here,
