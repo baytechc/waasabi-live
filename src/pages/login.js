@@ -3,6 +3,7 @@ import { html, render, nothing } from 'lit-html';
 import { showing, showContent } from '../js/sidebar.js';
 
 import { loginWithTicket } from '../js/auth.js';
+import { showHome } from './home.js';
 
 const WAASABI_BACKEND = process.env.WAASABI_BACKEND;
 
@@ -13,7 +14,7 @@ export const loginButtonHandler = async (e) => {
   showContent(tLoginStart({}));
 }
 
-function loginHandler(e) {
+async function loginHandler(e) {
   const btn = e.target;
   e.preventDefault();
 
@@ -21,7 +22,9 @@ function loginHandler(e) {
   const email = document.querySelector('input[name=email]').value
   const reference = document.querySelector('input[name=reference]').value
 
-  loginWithTicket(email, reference)
+  await loginWithTicket(email, reference)
+
+  showHome()
 }
 
 const videoList = {}
