@@ -53,6 +53,13 @@ export async function loginWithPin(email, pin) {
   return await login({ email, pin });
 }
 
+export async function loginWithTicket(email, reference) {
+  email = String(email).toLowerCase();
+  reference = String(reference).toUpperCase();
+
+  return await login({ email, reference });
+}
+
 export async function existingLogin() {
   const savedauth = window.localStorage.getItem('AUTH');
   if (!savedauth) return;
