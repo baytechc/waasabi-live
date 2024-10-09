@@ -115,3 +115,10 @@ body {
 a {
 	text-decoration-thickness: 2px;
 }
+
+/* Give some extra padding to the logo in the header */
+header img {
+  height: 85%;
+  width: auto;
+  margin: 4px;
+}
