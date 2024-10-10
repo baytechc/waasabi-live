@@ -53,7 +53,7 @@ async function init() {
     }
   
     lastid = Math.max(lastid, Math.max(pollsig?.map(s => s.id)))
-    setTimeout(poll, 5000+Math.random()*5000)
+    //setTimeout(poll, 5000+Math.random()*5000)
   }
   poll()
 }
