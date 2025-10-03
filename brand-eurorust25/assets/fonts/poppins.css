@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "Poppins-LightItalic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/Poppins-Light-Italic.woff) format("woff");
+}
+@font-face {
+  font-family: "Poppins-SemiBoldItalic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/Poppins-SemiBold-Italic.woff) format("woff");
+}
+@font-face {
+  font-family: "Poppins-Light";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/Poppins-Light.woff) format("woff");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/Poppins-Regular.woff) format("woff");
+}
