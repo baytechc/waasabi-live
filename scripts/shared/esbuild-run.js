@@ -62,8 +62,7 @@ function defines(opts = {}) {
     debug('Defined source replacements:');
     for (let [k,v] of configEntries) {
       redefs[`process.env.${k}`] = k in process.env ? process.env[k] : JSON.stringify(v);
-      debug('  %s => %s', k, ins(v));
     }
-
+    debug(ins(redefs))
     return redefs;
 }
