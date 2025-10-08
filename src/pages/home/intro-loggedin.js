@@ -14,11 +14,17 @@ const chatBtn = (e) => {
 const replays = { open: replaysButtonHandler };
 //const chat = { open: chatButtonHandler };
 const chat = { open: chatBtn };
+const discord = {
+  open(e) {
+    e.preventDefault();
+    window.open(process.env.WAASABI_DISCORD_URL,'_blank')
+  }
+}
 
 const EVENT_TITLE = process.env.WAASABI_EVENT_TITLE;
 
 function openSchedule(day = 1) {
-  window.open(`https://eurorust.eu/schedule/day/${day}/`)
+  window.open(`https://eurorust.eu/schedule/#day${day}/`)
 }
 
 export default html`
@@ -40,9 +46,10 @@ export default html`
 </p>
 
 <p>
-  You can ask questions and chat with folks on our Matrix channel:
+  You can ask questions and chat with folks on Discord & Matrix:
 
-  <br><button class="sbc" @click=${chat.open}>Chat</button>
+  <br><button class="sbc" @click=${discord.open}>Discord</button>
+  <br><button class="sbc" @click=${chat.open}>Matrix</button>
 
   <br><input type="checkbox" id="showchat" checked>&nbsp;<label for="showchat">Show chat messages</label>
 </p>
