@@ -5,6 +5,7 @@ export default {
   WAASABI_SESSION_URL: "",
 
   WAASABI_CHAT_URL: "https://matrix.to/#/#eurorust:rustch.at",
+  WAASABI_DISCORD_URL: "",
 
   WAASABI_CHAT_ENABLED: true,
   WAASABI_CHAT_SYSTEM: "matrix",
