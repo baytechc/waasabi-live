@@ -76,25 +76,10 @@ fsb.addEventListener('click', e => {
 el2.appendChild(fsb)
 document.querySelector('main').appendChild(el2);
 
-/*
 addExperience({
-  id: 'veloren',
-  title: 'Veloren',
-  src: '/assets/ex/veloren/index.html'
-})
-
-addExperience({
-  id: 'paddlepunks',
-  title: 'Paddlepunks',
-  src: '/assets/ex/paddlepunks/index.html'
-})
-
-*/
-
-addExperience({
-  id: 'huawei',
-  title: 'Live stream partner: Huawei',
-  src: '/assets/ex/huawei/index.html'
+  id: 'hightec',
+  title: 'Live stream partner: Hightec',
+  src: '/assets/ex/hightec/index.html'
 })
 
 function addExperience(data) {
