@@ -1,32 +1,17 @@
-// https://www.apollographql.com/docs/react/migrating/apollo-client-3-migration/#using-apollo-client-without-react
-import { ApolloClient } from '@apollo/client/core';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { InMemoryCache } from '@apollo/client/cache';
-
-import gql from 'graphql-tag';
+import { createClient, SubscribePayload } from 'graphql-ws';
 
 const GQL_LINK_WS = process.env.WAASABI_GRAPHQL_WS;
-//const GQL_AUTH_TOKEN = process.env.GQL_AUTH_TOKEN || '';
 
-const SUB_SIGNALS = gql`
+const SUB_SIGNALS = `
 subscription OnSignal {
   newPushEvent {
     id, event, data, created_at,
   }
 }`;
-const SUB_CHAT_MESSAGES = gql`
-subscription OnChatMessage {
-  afterCreateChatMessage {
-    chatMessage {
-      sender, message, message_details, ts,
-    }
-  }
-}`;
 
-
-let _apolloClient;
+let _wsClient;
 function connect(opts = {}) {
-  if (_apolloClient) return _apolloClient;
+  if (_wsClient) return _wsClient;
 
   const connectionParams = {};
 
@@ -34,63 +19,28 @@ function connect(opts = {}) {
     connectionParams['Authorization'] = `Bearer ${opts.authToken}`;
   }
 
-  const wsLink = new WebSocketLink({
-    uri: GQL_LINK_WS,
-    options: {
-      //disable reconnects until we fix the connection issue
-      //reconnect: true,
-      reconnect: false,
-      connectionParams
-    }
+  _wsClient = createClient({
+    url: GQL_LINK_WS,
+    connectionParams: () => ({ Authorization: `Bearer ${opts.authToken}` }),
+    keepAlive: 25_000
   });
 
-  const cache = new InMemoryCache();
-
-  const apolloClient = new ApolloClient({
-    // Provide required constructor fields
-    cache: cache,
-    link: wsLink,
-    credentials: 'include',
-
-    // Provide some optional constructor fields
-    name: 'waasabi-experience',
-    version: '1.0',
-  });
-  //console.log('Apollo Client ready:', apolloClient);
-
-  _apolloClient = apolloClient;
-  return apolloClient;
+  return _wsClient;
 }
 
 // A single GQL connection to the server per client
-//const gqlConnection = connect({ authToken: GQL_AUTH_TOKEN });
 const gqlConnection = connect({});
 
-const gqlSignals = gqlConnection.subscribe({ query: SUB_SIGNALS });
-// const gqlChatMessages = gqlConnection.subscribe({ query: SUB_CHAT_MESSAGES });
+const gqlSignals = gqlConnection.iterate({ query: SUB_SIGNALS });
 
-export function onSignal(cb) {
+export async function onSignal(cb) {
   if (typeof cb !== 'function') {
     console.warn('Empty subscription request.');
     return;
   }
 
-  gqlSignals.subscribe({
-    next(incoming) {
-      cb(incoming.data.newPushEvent);
-    }
-  });
+  for await (const incoming of gqlSignals) {
+    console.log('Incoming gqlSignal: ', incoming)
+    cb(incoming.data.newPushEvent);
+  }
 }
-
-// export function onChatMessage(cb) {
-//   if (typeof cb !== 'function') {
-//     console.warn('Empty subscription request.');
-//     return;
-//   }
-
-//   gqlChatMessages.subscribe({
-//     next(incoming) {
-//       cb(incoming.data.afterCreateChatMessage.chatMessage);
-//     }
-//   });
-// }

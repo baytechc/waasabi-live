@@ -1,6 +1,6 @@
 export default {
-  WAASABI_BACKEND: (process.env.NODE_ENV==='production' ? "https://eurorust-2025.rustfest.family/api/v1" : "http://localhost:9000"),
-  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' ? "wss://eurorust-2025.rustfest.family/events" : "ws://localhost:9000/events"),
+  WAASABI_BACKEND: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "https://eurorust-2025.rustfest.family/api/v1" : "http://localhost:9000"),
+  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "wss://eurorust-2025.rustfest.family/events" : "ws://localhost:9000/events"),
 
   WAASABI_SESSION_URL: "",
 
