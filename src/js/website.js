@@ -82,6 +82,12 @@ addExperience({
   src: '/assets/ex/hightec/index.html'
 })
 
+addExperience({
+  id: 'whirlwind',
+  title: 'Whirlwind Chat',
+  src: 'https://whirlwind.chat/lobbies/KmKRzW6'
+})
+
 function addExperience(data) {
   const { id, title, src, } = data;
   let el=document.createElement('div')

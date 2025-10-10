@@ -11,7 +11,7 @@
 }
 .ac .activeContentTrigger {
 	display: block;
-	position: absolute;
+	position: relative;
 	left: 0;
 	top: 0;
 	z-index: 1;
@@ -52,6 +52,13 @@
 
 .ac:not([data-active="true"]) .activeContentTrigger.ex-hightec {
   background-image: url('/assets/ex/hightec/logo.svg');
+  background-color: var(--c-purple-900);
+	position: static;
+	height: 3rem;
+}
+
+.ac:not([data-active="true"]) .activeContentTrigger.ex-whirlwind {
+  background-image: url('https://whirlwind.chat/_app/immutable/assets/header-logo-whirlwind-chat.wGAB7zC0.svg');
   background-color: var(--c-purple-900);
 	position: static;
 	height: 3rem;
