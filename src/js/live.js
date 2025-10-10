@@ -1,4 +1,4 @@
-import { createClient, SubscribePayload } from 'graphql-ws';
+import { createClient } from 'graphql-ws';
 
 const GQL_LINK_WS = process.env.WAASABI_GRAPHQL_WS;
 
