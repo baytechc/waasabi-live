@@ -4,6 +4,7 @@
 <head>${includes.head}</head>
 
 <body>
+  ${includes.body_top}
   <header>
     ${includes.titlebar}
     <span class="streambox__popup"></span>

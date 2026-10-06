@@ -199,3 +199,36 @@ header > .titlebar a:visited {
 a {
 	text-decoration-thickness: 2px;
 }
+
+
+/* Fluff */
+body {
+  overflow: hidden
+}
+
+.cloud {
+  position: absolute;
+  top: 80vh;
+  opacity: .8
+}
+
+.cloud {
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-name: drifting;
+  animation-timing-function: linear;
+}
+
+@keyframes drifting {
+  from {
+    translate: 100vw 0;
+  }
+
+  to {
+    translate: -100vw 0;
+  }
+}
+
+footer {
+  background: none;
+}

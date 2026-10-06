@@ -46,9 +46,21 @@ export default function generate(ROOT, SRC, IN) {
     }
 
     // Try loading html instead
-    src = format(expandVars(fs.readFileSync(IN_HTML).toString()));
+    try {
+      src = format(expandVars(fs.readFileSync(IN_HTML).toString()));
 
-    debug('Translating: %s', rel(IN_HTML));
+      debug('Translating: %s', rel(IN_HTML));
+    }
+    catch(e) {
+      if (e.code !== 'ENOENT') {
+        console.error(e);
+        process.exit(1);
+      }
+
+      // If no such input exists we simply ignore it
+      debug('No translation for %s - source does not exist', rel(IN_HTML))
+      src = '<!-- placeholder -->'
+    }
   }
 
   const sourceType = src.includes('<html') ? 'html' : 'htmlFragment';

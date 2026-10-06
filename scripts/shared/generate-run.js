@@ -19,6 +19,7 @@ export default async function run(opts = {}) {
     // src/includes/head
     [ 'src/includes', 'head' ],
     [ 'src/includes', 'titlebar' ],
+    [ 'src/includes', 'body_top' ],
   ];
   const pageFiles = [
     // src/index.md
