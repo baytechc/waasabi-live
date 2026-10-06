@@ -9,7 +9,7 @@ import * as streamPeertube from './stream-peertube.js';
 
 import * as activeContent from './active-content.js';
 
-import { status, JWT } from './auth.js'
+import { JWT } from './auth.js'
 
 const STREAM_TYPES = {
   hls: streamHls,

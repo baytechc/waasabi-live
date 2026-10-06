@@ -17,10 +17,8 @@ export default async function run(opts = {}) {
   // TODO: glob these out
   const partFiles = [
     // src/includes/head
-    [
-      'src/includes',
-      'head'
-    ],
+    [ 'src/includes', 'head' ],
+    [ 'src/includes', 'titlebar' ],
   ];
   const pageFiles = [
     // src/index.md

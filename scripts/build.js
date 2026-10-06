@@ -15,10 +15,14 @@ import {
   copyContentsSync as copyContents,
 } from './shared/cp-r.js';
 
+import DBG from 'debug';
+const debug = DBG('build');
+
 const DEBUG = process.argv.includes('--debug')
   || process.argv.includes('--verbose')
   || process.argv.includes('-v');
 
+if (DEBUG) DBG.enable('build,build:*');
 
 // Branding
 const brand = config.WAASABI_BRAND ?? 'brand';
@@ -43,6 +47,7 @@ if (config.BUILD_COPY) {
 // the overrides from ./brand and generate final build artifacts
 // using the content of this directory
 if (brand && fs.existsSync('./'+brand)) {
+  debug("Preparing branding overrides for %s", brand)
   copyContents(R(brand), prebuild);
 }
 

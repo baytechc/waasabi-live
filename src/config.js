@@ -1,6 +1,6 @@
 export default {
-  WAASABI_BACKEND: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "https://eurorust-2025.rustfest.family/api/v1" : "http://localhost:9000"),
-  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "wss://eurorust-2025.rustfest.family/events" : "ws://localhost:9000/events"),
+  WAASABI_BACKEND: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "https://eurorust.rustfest.family/api/v1" : "http://localhost:9000"),
+  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "wss://eurorust.rustfest.family/events" : "ws://localhost:9000/events"),
 
   WAASABI_SESSION_URL: "",
 
@@ -16,8 +16,8 @@ export default {
   WAASABI_MATRIX_CLIENT_URL: "https://rustch.at",
   WAASABI_MATRIX_API_URL: "https://rustch.at",
 
-  WAASABI_BRAND: "brand-eurorust25",
-  WAASABI_EVENT_TITLE: "EuroRust 2025",
+  WAASABI_BRAND: "brand-eurorust26",
+  WAASABI_EVENT_TITLE: "EuroRust 2026",
 
   // All WAASABI_* variables are exposed to frontend code via process.env.* using ESBuild
 
@@ -30,14 +30,13 @@ export default {
 
   PREFIX: "",
 
-  TITLE: "EuroRust 2025",
-  DESCRIPTION: "EuroRust is a 2 day conference for the European Rust community – October 9 and 10, 2025 – Paris and online",
+  TITLE: "EuroRust 2026",
+  DESCRIPTION: "EuroRust 2026 is a conference for the European Rust community, held in Barcelona and online from October 14 to 17, 2026.",
 
   WEBSITE: "https://eurorust.eu",
-  TWITTER: "@euro_rust",
 
   COC_LINK: "https://eurorust.eu/code-of-conduct/",
 
-  SOCIALIMAGE_LINK: "https://eurorust.eu/images/og-image.png",
+  SOCIALIMAGE_LINK: "https://eurorust.eu/images/og-image.webp",
   SOCIALIMAGE_ALT: "EuroRust",
 };

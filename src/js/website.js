@@ -77,12 +77,6 @@ el2.appendChild(fsb)
 document.querySelector('main').appendChild(el2);
 
 addExperience({
-  id: 'hightec',
-  title: 'Live stream partner: Hightec',
-  src: '/assets/ex/hightec/index.html'
-})
-
-addExperience({
   id: 'whirlwind',
   title: 'Whirlwind Chat',
   src: 'https://whirlwind.chat/lobbies/KmKRzW6'

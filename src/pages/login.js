@@ -49,6 +49,8 @@ it usually consists of uppercase letters followed by a dash and a number</p>
 <input type="email" id="loginref" placeholder="ABCD-N"
   name="reference" required>
 
+<br/>
+
 <button class="sbc inline login" @click=${loginHandler}>Authenticate</button>
 </fieldset>
 

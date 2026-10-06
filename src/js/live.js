@@ -1,4 +1,5 @@
 import { createClient } from 'graphql-ws';
+import { JWT } from './auth.js'
 
 const GQL_LINK_WS = process.env.WAASABI_GRAPHQL_WS;
 

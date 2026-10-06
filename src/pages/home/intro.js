@@ -6,7 +6,7 @@ import { chatButtonHandler } from '../chat/chat.js';
 const login = { open: loginButtonHandler };
 const chat = { open: chatButtonHandler };
 const tickets = { open() {
-  window.open(`https://ti.to/events-matter/eurorust-2025`)
+  window.open(`https://www.tickettailor.com/events/eurorust/2022388`)
 }}
 
 export default html`

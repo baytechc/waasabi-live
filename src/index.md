@@ -5,7 +5,7 @@
 
 <body>
   <header>
-    <a href="${config.WEBSITE}" target="_blank"><img src="${config.PREFIX}/assets/logo2.png" alt="${TITLE}"></a>
+    ${includes.titlebar}
     <span class="streambox__popup"></span>
   </header>
 
@@ -25,3 +25,4 @@
 </body>
 
 </html>
+  
