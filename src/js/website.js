@@ -76,12 +76,6 @@ fsb.addEventListener('click', e => {
 el2.appendChild(fsb)
 document.querySelector('main').appendChild(el2);
 
-addExperience({
-  id: 'whirlwind',
-  title: 'Whirlwind Chat',
-  src: 'https://whirlwind.chat/lobbies/KmKRzW6'
-})
-
 function addExperience(data) {
   const { id, title, src, } = data;
   let el=document.createElement('div')
