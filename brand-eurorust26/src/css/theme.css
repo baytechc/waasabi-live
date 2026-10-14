@@ -232,3 +232,14 @@ body {
 footer {
   background: none;
 }
+
+
+/* Better align the streambox popup */
+.streambox__popup {
+  /*position: absolute;*/
+  right: 2rem;
+  top: 1rem;
+  background: rgba(0,0,0,.7);
+  border-radius: 1rem;
+  padding: .5rem;
+}
