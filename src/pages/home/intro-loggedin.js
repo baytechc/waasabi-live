@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 
 import { replaysButtonHandler } from '../replays.js';
 import { chatButtonHandler } from '../chat/chat.js';
+import { Discord } from '../../discord.js';
 
 import { status as loggedin } from '../../js/auth.js';
 
@@ -14,12 +15,7 @@ const chatBtn = (e) => {
 const replays = { open: replaysButtonHandler };
 //const chat = { open: chatButtonHandler };
 const chat = { open: chatBtn };
-const discord = {
-  open(e) {
-    e.preventDefault();
-    window.open(process.env.WAASABI_DISCORD_URL,'_blank')
-  }
-}
+
 
 const EVENT_TITLE = process.env.WAASABI_EVENT_TITLE;
 
@@ -49,7 +45,7 @@ export default html`
   You can ask questions and chat with folks on Discord & Matrix:
 
   <br>
-  <button class="sbc" @click=${discord.open}>Discord</button>
+  <button class="sbc" @click=${Discord.open}>Discord</button>
   <button class="sbc" @click=${chat.open}>Matrix</button>
 </p>
 

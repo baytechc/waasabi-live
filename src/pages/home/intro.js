@@ -2,12 +2,11 @@ import { html } from 'lit-html';
 
 import { loginButtonHandler } from '../login.js';
 import { chatButtonHandler } from '../chat/chat.js';
+import { Discord } from '../../discord.js';
+import { Tickets } from '../../tickets.js';
 
 const login = { open: loginButtonHandler };
 const chat = { open: chatButtonHandler };
-const tickets = { open() {
-  window.open(`https://www.tickettailor.com/events/eurorust/2022388`)
-}}
 
 export default html`
 
@@ -25,13 +24,15 @@ export default html`
   on the link below. You will get access to all talk recordings and the
   remainder of the live stream instantly:
   <br>
-  <button class="sbc" @click="${tickets.open}">Tickets</button>
+  <button class="sbc" @click="${Tickets.purchase}">Tickets</button>
 </p>
 
 <p>
-  You can ask questions and chat with folks on our Matrix channel:
+  You can ask questions and chat with folks on Discord & Matrix:
 
-  <br><button class="sbc" @click=${chat.open}>Chat</button>
+  <br>
+  <button class="sbc" @click=${Discord.open}>Discord</button>
+  <button class="sbc" @click=${chat.open}>Matrix</button>
 </p>
 
 `;
