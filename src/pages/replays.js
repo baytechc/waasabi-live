@@ -1,5 +1,5 @@
 // Make sure video player is initialized
-import * as video from '../js/video-player.js';
+import { videoPlayer, play as playVideo } from '../js/video-player.js';
 
 import { html, render, nothing } from 'lit-html';
 import { until } from 'lit-html/directives/until.js';
@@ -24,13 +24,12 @@ export const replaysButtonHandler = async (e) => {
 const videoList = new Map()
 const tReplays = (p) => {
   const list =
-    window.videoJsReady
-    .then(() => fetch(`${WAASABI_BACKEND}/content/replays`, {
+    fetch(`${WAASABI_BACKEND}/content/replays`, {
       method: 'get',
       headers: {
         'Authorization': 'Bearer '+JWT()
       },
-    }))
+    })
     .then(r => r.json())
     .then(items => items.map(item => {
       const id = item.event_data.livestream.playback_id
@@ -71,49 +70,18 @@ const startReplay = (e) => {
   e.preventDefault();
 
   const p = videoList.get(playbackId)
-  const vElement = tVideoTag(p);
+  const replayPlayerElement = replayPlayer(p);
 
-  render(vElement, document.querySelector('.main__content'));
-
-  if (p.event_data.livestream.type != 'peertube') {
-    const player = videojs('replays_player', video.playerConfig());
-    console.log(player)
-
-    if (player) {
-      video.configurePlayer(player);
-
-      const poster = posterForId(playbackId)
-      const src = srcForId(playbackId)
-      const media = {
-        poster,
-        src: {
-          type: 'application/x-mpegURL',
-          src
-        }
-      }
-
-      player.loadMedia(media, () => {
-        console.log('Media loaded: ', media)
-        player.play()
-          .then(r => console.log('Playback started', r))
-          .catch(e => console.error('Failed to start playing', e))
-      })
-      player.load()
-
-      const el = player.el()
-      if (el) {
-        el.dataset.vid = vidForId(playbackId)
-        el.dataset.active = true
-      } else {
-        console.log('Video element not found')
-      }
-    } else {
-      console.log('Player not ready')
-    }
-  }
+  console.log(replayPlayerElement)
+  render(html`<div id="replays_player" class="ac active_content video-js" data-active="true">${replayPlayerElement}</div>`, document.querySelector('.main__content'));
 
   updateActiveContent();
+
+  replayPlayerElement.querySelector('mux-video').addEventListener('canplay', (e) => {
+    e.target.play()
+  }, { once: true })
 }
+
 const tVideoThumb = (p) => {
   const id = p.event_data.livestream.playback_id;
   const provider = p.event_data.livestream.type;
@@ -129,22 +97,40 @@ const tVideoThumb = (p) => {
   ></button>`;
 }
 
-const tVideoTag = (p) => {
+const replayPlayer = (p) => {
   const id = p.event_data.livestream.playback_id;
-  const provider = p.event_data.livestream.type;
-  if (provider == 'peertube') return tVideoTagPeertube(p);
 
   const poster = posterForId(id)
   const src = srcForId(id)
 
-  return html`<video-js id="replays_player"
-  class="ac replay__video active_content video-js vjs-waasabi waasabi-${provider}"
-  data-setup=""
-  preload="auto"
-  controls
-  autoplay
->
-</video-js>`;
+  let currentVideoPlayer = document.querySelector('#replays_player video-player')
+  if (currentVideoPlayer) {
+    const video = currentVideoPlayer.querySelector('mux-video')
+    console.log(video)
+    video.source = { playbackId: id }
+  } else {
+    currentVideoPlayer = videoPlayer({ poster, src })
+  }
+
+  return currentVideoPlayer
+}
+
+const tVideoTag = (p) => {
+  if (p.event_data.livestream.type === 'peertube') return tVideoTagPeertube(p);
+
+  return html`<div
+    id="replays_player"
+    class="ac active_content video-js"
+    data-vid="xxx"
+    data-active="true">${replayPlayer(p)}</div>`
+//   return html`<video-js id="replays_player"
+//   class="ac replay__video active_content video-js vjs-waasabi waasabi-${provider}"
+//   data-setup=""
+//   preload="auto"
+//   controls
+//   autoplay
+// >
+// </video-js>`;
 }
 const tVideoTagPeertube = (p) => {
   const id = p.event_data.livestream.playback_id;

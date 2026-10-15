@@ -1,52 +1,51 @@
-import VideoJS from 'video.js';
-//import QualitySelectorHls from 'videojs-quality-selector-hls'
+import { html } from 'lit-html';
+
+import '@videojs/html/video/player';
+import '@videojs/html/video/neutral-skin';
+import '@videojs/html/live-video/player';
+import '@videojs/html/live-video/neutral-skin';
+import '@videojs/html/media/mux-video';
 
 
-async function init() {
-  // CSS
-  //const videojsStyle = document.createElement('link');
-  //videojsStyle.setAttribute('rel', 'stylesheet');
-  //videojsStyle.setAttribute('href', process.env.W_PREFIX+'/assets/videojs/video-js.min.css');
-  //document.head.appendChild(videojsStyle);
-  // - disabled, we add this to the site CSS
+export function livePlayer(options) {
+  console.log('[VIDEO-PLAYER] Creating <live-video-player>', options)
 
-  videojs = window.videojs ?? VideoJS;
-  window.videoJsReady = Promise.resolve(videojs);
+  const playerContainer = document.createElement('div');
+  playerContainer.innerHTML = `<live-video-player id="${options.cid}">
+    <live-video-neutral-skin style="display: block; width: 100%; aspect-ratio: 16 / 9;">
+      <mux-video autoplay muted playsinline preload="auto" stream-type="live"></mux-video>
+    </live-video-neutral-skin>
+  </live-video-player>`
 
-  //videojs.registerPlugin('qualitySelectorHls', QualitySelectorHls);
+  const muxVideo = playerContainer.querySelector('mux-video') 
+  muxVideo.source = {
+    playbackId: options.id,
+  }
+
+  return playerContainer.firstElementChild
 }
 
+export function videoPlayer(options) {
+  console.log('[VIDEO-PLAYER] Creating <video-player>', options)
 
-export function playerConfig(opts = {}) {
-  let config = ({
-    controls: true,
-    playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2],
-  });
-  return config;
+  const playerContainer = document.createElement('div');
+  playerContainer.innerHTML = `<video-player>
+    <video-neutral-skin style="display: block; width: 100%; aspect-ratio: 16 / 9;">
+      <mux-video
+        src="${options.src ?? ''}"
+        poster="${options.poster ?? ''}"
+        crossorigin="anonymous"
+        playsinline></mux-video>
+    </video-neutral-skin>
+  </video-player>`
+
+  console.log(playerContainer)
+  return playerContainer.firstElementChild
 }
 
-export function configurePlayer(player, opts = {}) {
-  // TODO: run playerConfig(opts) on player
-
-  // This is disabled because every existing version/fork of the library is broken
-  // Symptom: infinite buffering on quality switch, chunks stop downloading
-  // Needs further debugging as automatic switching on viewport resize usually works,
-  // but observed to occasionally break, perhaps the same issue as:
-  // https://github.com/videojs/video.js/issues/7107
-
-  //player.qualitySelectorHls({
-  // displayCurrentQuality: true,
-  //})
-
-  // this is now included built-in
-  const ql = player.qualityLevels();
-
-  ql.on('change', (e) => {
-    if (ql.selectedIndex !== -1) {
-      const { width, height, bitrate } = ql[ql.selectedIndex]
-      console.log(`Quality level selected: #${ql.selectedIndex} (${width}x${height}, ${bitrate/1024|0}kbps)`)
-    }
-  });
+export async function play(element) {
+  const store = element?.store
+  console.log('JUST PUSH PLAY', store, store?.paused ? 'paused' : 'playing')
+  await store?.play()
+  console.log(store.paused)
 }
-
-init();

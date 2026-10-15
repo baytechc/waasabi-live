@@ -1,4 +1,4 @@
-import * as hls from './content/hls.js';
+  import * as hls from './content/hls.js';
 import * as peertube from './content/peertube.js';
 import * as idle from './content/idle.js';
 

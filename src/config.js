@@ -1,6 +1,6 @@
 export default {
-  WAASABI_BACKEND: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "https://eurorust.rustfest.family/api/v1" : "http://localhost:9000"),
-  WAASABI_GRAPHQL_WS: (process.env.NODE_ENV==='production' || process.env.USE_LIVE_BACKEND ? "wss://eurorust.rustfest.family/events" : "ws://localhost:9000/events"),
+  WAASABI_BACKEND: (process.env.WAASABI_BACKEND_API ? process.env.WAASABI_BACKEND_API : "http://localhost:9000"),
+  WAASABI_GRAPHQL_WS: (process.env.WAASABI_BACKEND_WEBSOCKET ? process.env.WAASABI_BACKEND_WEBSOCKET : "ws://localhost:9000/events"),
 
   WAASABI_SESSION_URL: "",
 
@@ -25,7 +25,7 @@ export default {
   BUILD_COPY: {
     // TODO: globs
     // Copy VideoJS assets
-    "node_modules/video.js/dist/video-js.min.css": "assets/videojs",
+    // "node_modules/video.js/dist/video-js.min.css": "assets/videojs",
   },
 
   PREFIX: "",

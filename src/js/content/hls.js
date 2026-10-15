@@ -1,78 +1,94 @@
-import '../video-player.js';
+import { livePlayer } from '../video-player.js';
 
 import { html, render } from 'lit-html';
 
+// <video-player>
+//   <media-container class="media-container">
+//     <mux-video src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM.m3u8" autoplay muted playsinline loop crossorigin="anonymous"></mux-video>
+//   </media-container>
+// </video-player>
+
 
 export async function live(options) {
-  const { cid, streamUrl } = options;
+  const content = document.createElement('div')
+  content.className = "ac streambox__video active_content video-js"
 
-  await window.videoJsReady;
+  const player = livePlayer(options)
+  content.appendChild(player)
 
-  // Video element exists?
-  let player;
-  try {
-    player = videojs(cid);
-  }
-  catch(e) {
-    if (!e.message.includes('ID supplied is not valid')) {
-      console.error(e);
-    }
-  };
+  const act = document.createElement('button');
+  act.className = "activeContentTrigger stream";
+  content.appendChild(act)
 
-  if (player) {
-    try {
-      player.src(streamUrl);
-      player.play();
-      // TODO: properly clean the overlay
-      player.el().querySelector('.active_content_overlay').remove();
-      return player.el();
-    }
-    catch(e) {
-      console.log(e);
-    }
-    // TODO: mute detection
-  }
+  return content
 
-  return new Promise(resolve => {
-    // Need to create new player
-    // TODO: reuse the same code as in "idle()"
-    const frag = document.createDocumentFragment();
-    render(tVideoTag(options), frag);
+  // const { cid, streamUrl } = options;
 
-    const vElement = frag.querySelector('video');
+  // // Video element exists?
+  // let player;
+  // try {
+  //   player = videojs(cid);
+  // }
+  // catch(e) {
+  //   if (!e.message.includes('ID supplied is not valid')) {
+  //     console.error(e);
+  //   }
+  // };
 
-    videojs(vElement, null, function() {
-      const player = this;
-      const overlay = document.createDocumentFragment();
-      render(tVideoOverlay({ contents: '' }), overlay);
+  // if (player) {
+  //   try {
+  //     player.src(streamUrl);
+  //     player.play();
+  //     // TODO: properly clean the overlay
+  //     player.el().querySelector('.active_content_overlay').remove();
+  //     return player.el();
+  //   }
+  //   catch(e) {
+  //     console.log(e);
+  //   }
+  //   // TODO: mute detection
+  // }
 
-      player.el().appendChild(overlay);
+  // return new Promise(resolve => {
+  //   // Need to create new player
+  //   // TODO: reuse the same code as in "idle()"
+  //   const frag = document.createDocumentFragment();
+  //   render(tVideoTag(options), frag);
 
-      try {
-        player.src(streamUrl);
-        player.play();
-        // TODO: properly clean the overlay
-        let ac = player.el().querySelector('.active_content_overlay');
-        while (ac && ac.firstChild) ac.firstChild.remove();
-      }
-      catch(e) {
-        console.log(e);
-      }
+  //   const vElement = frag.querySelector('video');
 
-      const PE = player.el()
-      const act = document.createElement('button');
-      act.className = "activeContentTrigger stream";
-      PE.appendChild(act)
+  //   videojs(vElement, null, function() {
+  //     const player = this;
+  //     const overlay = document.createDocumentFragment();
+  //     render(tVideoOverlay({ contents: '' }), overlay);
 
-      resolve(PE);
-    });
-  });
+  //     player.el().appendChild(overlay);
+
+  //     try {
+  //       player.src(streamUrl);
+  //       player.play();
+  //       // TODO: properly clean the overlay
+  //       let ac = player.el().querySelector('.active_content_overlay');
+  //       while (ac && ac.firstChild) ac.firstChild.remove();
+  //     }
+  //     catch(e) {
+  //       console.log(e);
+  //     }
+
+  //     const PE = player.el()
+  //     const act = document.createElement('button');
+  //     act.className = "activeContentTrigger stream";
+  //     PE.appendChild(act)
+
+  //     resolve(PE);
+  //   });
+  // });
 }
 
 export async function ondemand(options) {}
 
 
-const tVideoTag = (p = {}) => html`<video
+const tVideoTag = (p = {}) => html`<video-player
   id="${p.cid}"
   class="ac streambox__video active_content video-js vjs-waasabi ${p.classes?.join(' ')}"
   data-setup='{"liveui":"true"}'
@@ -81,7 +97,7 @@ const tVideoTag = (p = {}) => html`<video
   controls
   muted
 >
-</video>`;
+</video-player>`;
 
 const tVideoOverlay = (p = {}) => html`<div class="active_content_overlay">
 ${p.contents}
